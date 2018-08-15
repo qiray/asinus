@@ -1,0 +1,20 @@
+{
+  "name": "asinus",
+  "version": "1.0.0",
+  "description": "Utility for making rational decisions",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://qiray@bitbucket.org/qiray/asinus.git"
+  },
+  "author": "qiray",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/qiray/asinus#readme",
+  "devDependencies": {
+    "electron": "^2.0.7"
+  }
+}
