@@ -1,59 +1,48 @@
 
-const {app, BrowserWindow} = require('electron');
-  
-  // Keep a global reference of the window object, if you don't, the window will
-  // be closed automatically when the JavaScript object is garbage collected.
+const {app, Menu, BrowserWindow} = require('electron');
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
 let win;
-  
+
 function createWindow () {
     // Создаёт окно браузера.
     win = new BrowserWindow({width: 800, height: 600});
-    win.setMenu(null); //Убираем меню
+
+    //Add menu:
+    const menuJS = require('./js/menu.js');
+    const menu = Menu.buildFromTemplate(menuJS.template);
+    Menu.setApplicationMenu(menu);
   
-    // и загрузит index.html приложение.
-    
-    win.loadFile('index.html');
+    win.loadFile('index.html'); //load html app
   
-    // Open the DevTools.
-    // win.webContents.openDevTools()
-  
-    // Возникает, когда окно будет закрыто.
+    //when windows is closed
     win.on('closed', () => {
-        // Разбирает объект окна, обычно вы можете хранить окна     
-        // в массиве, если ваше приложение поддерживает несколько окон в это время,
-        // тогда вы должны удалить соответствующий элемент.
-        win = null;
+        win = null; //delete window
     });
 
-    //window finished all load
+    //window finished all load -> show name and version in title
     win.webContents.on('did-finish-load', () => {
         let name = require('./package.json').name;
         let version = require('./package.json').version;
         win.setTitle(name + " " + version);
     });
 }
-  
-  // Этот метод будет вызываться, когда Electron закончит 
-  // инициализацию и готов к созданию окон браузера.
-  // Некоторые интерфейсы API могут использоваться только после возникновения этого события.
+
+//Init is complete. Electron is ready to create windows.
 app.on('ready', createWindow);
   
-  // Выйти, когда все окна будут закрыты.
+//When all windows are closed
 app.on('window-all-closed', () => {
-    // На macOS это обычно для приложений и их строки меню
-    // оставаться активным до тех пор, пока пользователь не выйдет явно с помощью Cmd + Q
+    // hack for macOS - quit app when all windows are closed
     if (process.platform !== 'darwin') {
         app.quit();
     }
 });
   
 app.on('activate', () => {
-     // На MacOS это общее для того чтобы создать окно в приложении, когда значок 
-     // dock нажали и нет других открытых окон.
+    // hack for macOS
     if (win === null) {
         createWindow();
     }
 });
-  
-// В этом файле вы можете включить код другого основного процесса 
-// вашего приложения. Можно также поместить их в отдельные файлы и применить к ним require.
