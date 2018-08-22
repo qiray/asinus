@@ -15,6 +15,7 @@ function createWindow () {
     Menu.setApplicationMenu(menu);
   
     win.loadFile('index.html'); //load html app
+    // win.webContents.openDevTools();//enable devtools
   
     //when windows is closed
     win.on('closed', () => {
@@ -23,9 +24,8 @@ function createWindow () {
 
     //window finished all load -> show name and version in title
     win.webContents.on('did-finish-load', () => {
-        let name = require('./package.json').name;
-        let version = require('./package.json').version;
-        win.setTitle(name + " " + version);
+        let package = require('./package.json');
+        win.setTitle(package.name + " " + package.version);
     });
 }
 
@@ -46,3 +46,7 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+function editWeights() {
+    console.log(1);
+}

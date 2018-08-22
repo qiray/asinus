@@ -34,7 +34,14 @@ const template = [
         role: 'help',
         submenu: [
             {label: "Help"},
-            {label: "About"}
+            {label: "About", click() {
+                const {dialog} = require('electron');
+                dialog.showMessageBox({
+                    title: "About",
+                    buttons: ["OK"],
+                    message: getAboutInfo()
+                });
+            }}
       ]
     }
 ];
@@ -55,5 +62,12 @@ if (process.platform === 'darwin') {
         ]
     });
 }
-  
+
+function getAboutInfo() {
+    let package = require('../package.json');
+    return package.name + " " + package.version + "\n" +
+        "Made with Node.js " + process.versions.node + ", Chrome " + 
+        process.versions.chrome + ", Electron " + process.versions.electron + ".";
+}
+
 module.exports.template = template; //export template for usage in other modules
