@@ -6,7 +6,8 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
-        <table> <!-- TODO: style this table -->
+        <!-- TODO: style this file -->
+        <table>
             <tbody>
                 <tr>
                     <td>
@@ -26,10 +27,23 @@
             </tbody>
         </table>
 
-        <div id = "weightsData"></div>
-        <div id = "variantsData"></div>
+        <div style="display: none;" id="weightsData">
+            <h3>Criteria</h3>
+            <div class="divTable blueTable">
+                <div class="divTableBody" id="weightsDataBody">
+                    <div class="divTableRow">
+                        <div class="divTableCell">Name</div>
+                        <div class="divTableCell">Weight</div>
+                        <div class="divTableCellSmall">Inverted</div>
+                        <div class="divTableCellSmall">Delete</div>
+                    </div>
+                </div>
+            </div>
+            <button class="plusButton" id="weightsPlusButton">+</button>
+        </div>
+        <div style="display: none;" id="variantsData"></div>
 
-        <div id="testData">
+        <div id="testData" style="display: none;">
             <h2>Test data:</h2>
             <h3>Критерии</h3>
             <div class="divTable blueTable">

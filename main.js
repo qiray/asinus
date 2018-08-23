@@ -1,6 +1,8 @@
 
 const {app, Menu, BrowserWindow} = require('electron');
 
+//TODO: read https://github.com/crilleengvall/electron-tutorial-app
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;

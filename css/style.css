@@ -5,11 +5,11 @@ div.blueTable {
     text-align: left;
     border-collapse: collapse;
 }
-.divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+.divTable.blueTable .divTableCell, .divTableCellSmall, .divTable.blueTable .divTableHead {
     border: 1px solid #AAAAAA;
     padding: 3px 2px;
 }
-.divTable.blueTable .divTableBody .divTableCell {
+.divTable.blueTable .divTableBody .divTableCell, .divTableCellSmall {
     font-size: 13px;
 }
 .divTable.blueTable .divTableRow:nth-child(even) {
@@ -37,12 +37,30 @@ div.blueTable {
 .divTable{ display: table; }
 .divTableRow { display: table-row; }
 .divTableHeading { display: table-header-group;}
-.divTableCell, .divTableHead { display: table-cell;}
+.divTableCell, .divTableHead, .divTableCellSmall { display: table-cell;}
 .divTableHeading { display: table-header-group;}
 .divTableFoot { display: table-footer-group;}
 .divTableBody { display: table-row-group;}
 
+.divTableCell {
+    max-width: 0px;
+}
+.divTableCellSmall {
+    width: 4em;
+}
 .mainMenuButton {
     width: 27em;
     height: 3em;
 }
+.plusButton {
+    width: 2em;
+    height: 2em;
+}
+.tableInput {
+    width: 99%;
+}
+
+/* input[type="checkbox"]{
+    width: 2em;
+    height: 2em;
+} */
