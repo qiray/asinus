@@ -1,7 +1,8 @@
 
 let Criterion = require("./criterion.js");
 
-class Data {
+class AppData {
+
     constructor(name, description = "") {
         this.name = name;
         this.description = description;
@@ -24,6 +25,10 @@ class Data {
             this.description = description;
     }
     addCriterion(criterion) {
+        if (arguments.length === 0) {
+            this.criteria.push(new Criterion.Criterion(toString(this.criteria.length), 0));
+            return;
+        }
         if (criterion instanceof Criterion.Criterion)
             this.criteria.push(criterion);
     }
@@ -33,7 +38,10 @@ class Data {
             //TODO: change variants
         }
     }
+    getCriteriaCount() {
+        return this.criteria.length;
+    }
     //TODO: add functions for control variants
 }
 
-module.exports.Data = Data;
+module.exports.AppData = AppData;
