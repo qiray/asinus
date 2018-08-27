@@ -26,6 +26,7 @@ class AppData {
     }
     addCriterion(criterion) {
         if (arguments.length === 0) {
+            console.log(0);
             this.criteria.push(new Criterion.Criterion(toString(this.criteria.length), 0));
             return;
         }
@@ -36,6 +37,12 @@ class AppData {
         if (typeof(index) === 'number' && index > -1) {
             this.criteria.splice(Math.floor(index), 1);
             //TODO: change variants
+        }
+    }
+    updateCriterion(index, criterion) {
+        if (typeof(index) === 'number' && index > -1 && index < this.criteria.length && 
+            criterion instanceof Criterion.Criterion) {
+            this.criteria[index] = criterion;
         }
     }
     getCriteriaCount() {

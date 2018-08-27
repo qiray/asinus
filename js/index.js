@@ -1,5 +1,6 @@
 
 let AppData = require("./appdata.js");
+let Criterion = require("./criterion.js");
 
 let appData = new AppData.AppData(); //application data
 
@@ -16,33 +17,26 @@ function weightTabledeleteRow(index) {
         return;
     obj.remove();
     appData.deleteCriterion(index);
+    console.log(appData);
 }
 
 function weightTableAddRow() {
-    //TODO: add logic
     let table = document.getElementById('weightsDataBody');
     if (table === undefined)
         return;
     let index = appData.getCriteriaCount();
-    let row_template = `
-    <div class="divTableRow" id ="weightTableRow` + index + `">
-        <div class="divTableCell"><input type="text" class="tableInput"></div>
-        <div class="divTableCell"><input type="number" min="0" class="tableInput"></div>
-        <div class="divTableCellSmall"><input type="checkbox"></div>
-        <div class="divTableCellSmall"><button class="plusButton" id="deleteCriterionButton` + index + `">-</button></div>
-    </div>`; //TODO: replace with addElement
     appData.addCriterion();
     table.appendChild(newWeightTableRowElements(index));
     document.getElementById('deleteCriterionButton' + index).onclick = function() {
         weightTabledeleteRow(index);
     };
+    console.log(appData);
 }
 
-function tableNewColumn(type, columnClassName, objClassName, params) { //TODO: test
-    var column = document.createElement('div');
+function tableNewColumn(type, columnClassName, params) {
+    let column = document.createElement('div');
     column.className = columnClassName;
-    var obj = document.createElement('type');
-    obj.className = objClassName;
+    let obj = document.createElement(type);
     for (let prop in params) {
         obj[prop] = params[prop];
     }
@@ -50,35 +44,53 @@ function tableNewColumn(type, columnClassName, objClassName, params) { //TODO: t
     return column;
 }
 
-function newWeightTableRowElements(index) { //TODO: test
-    var container = document.createElement('div');
+function newWeightTableRowElements(index) {
+    let container = document.createElement('div');
     container.className = "divTableRow";
-    container.id = "weightTableRow" + weightTableRow;
-
-    var column1 = document.createElement('div');
-    column1.className = "divTableCell";
-    var input1 = document.createElement('input');
-    input1.className = "tableInput";
-    input1.type = "text";
-    column1.appendChild(input1);
-    container.appendChild(column1);
-
-    var column2 = document.createElement('div');
-    column1.className = "divTableCell";
-    var input2 = document.createElement('input');
-    input2.className = "tableInput";
-    input2.type = "number";
-    input2.min = "0";
-    column2.appendChild(input2);
-    container.appendChild(column2);
-
+    container.id = "weightTableRow" + index;
+    container.appendChild(tableNewColumn('input', 'divTableCell', 
+        {className : 'tableInput', type : 'text', id : 'criterionName' + index}));
+    container.appendChild(tableNewColumn('input', 'divTableCell', 
+        {className : 'tableInput', type : 'number', min : '0', step : '0.01', id : 'criterionValue' + index}));
+    container.appendChild(tableNewColumn('input', 'divTableCellSmall', 
+        {type : 'checkbox', id : 'criterionInverted' + index}));
+    container.appendChild(tableNewColumn('button', 'divTableCellSmall', 
+        {className : 'plusButton', id : 'deleteCriterionButton' + index, innerHTML : '-'}));
     return container;
+}
+
+function saveAll() {
+    saveCriteria();
+}
+
+function saveCriteria() {
+    let count = appData.getCriteriaCount();
+    try {
+        for (let i = 0; i < count; i++) {
+            appData.updateCriterion(i, new Criterion.Criterion(
+                document.getElementById('criterionName' + i).value,
+                document.getElementById('criterionValue' + i).value,
+                document.getElementById('criterionInverted' + i).checked
+            ));
+        }
+    } catch(e) {
+        console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
+    }
+    console.log(appData);
 }
 
 document.getElementById('editWeights').onclick = function() {
     showWeightsTable();
 };
 
+document.getElementById('editVariants').onclick = function() {
+    saveAll();
+};
+
 document.getElementById('weightsPlusButton').onclick = function() {
     weightTableAddRow();
+};
+
+document.getElementById('showResult').onclick = function() {
+    saveAll();
 };
