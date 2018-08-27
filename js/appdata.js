@@ -6,7 +6,7 @@ class AppData {
     constructor(name, description = "") {
         this.name = name;
         this.description = description;
-        this.criteria = [];
+        this.criteria = {};
         this.variants = [];
     }
 
@@ -25,28 +25,24 @@ class AppData {
             this.description = description;
     }
     addCriterion(criterion) {
-        if (arguments.length === 0) {
-            console.log(0);
-            this.criteria.push(new Criterion.Criterion(toString(this.criteria.length), 0));
-            return;
-        }
         if (criterion instanceof Criterion.Criterion)
-            this.criteria.push(criterion);
+            this.criteria[criterion.id] = criterion;
     }
-    deleteCriterion(index) {
-        if (typeof(index) === 'number' && index > -1) {
-            this.criteria.splice(Math.floor(index), 1);
-            //TODO: change variants
-        }
+    deleteCriterion(id) {
+        delete this.criteria[id];
+        //TODO: change variants
     }
-    updateCriterion(index, criterion) {
-        if (typeof(index) === 'number' && index > -1 && index < this.criteria.length && 
-            criterion instanceof Criterion.Criterion) {
-            this.criteria[index] = criterion;
+    updateCriterion(id, criterion) {
+        if (criterion instanceof Criterion.Criterion) {
+            criterion.id = id;
+            this.criteria[id] = criterion;
         }
     }
     getCriteriaCount() {
-        return this.criteria.length;
+        return Object.keys(this.criteria).length;
+    }
+    getCriteriaIDs() {
+        return Object.keys(this.criteria);
     }
     //TODO: add functions for control variants
 }

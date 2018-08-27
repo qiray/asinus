@@ -4,36 +4,38 @@ let Criterion = require("./criterion.js");
 
 let appData = new AppData.AppData(); //application data
 
-function showWeightsTable() {
-    let weightsData = document.getElementById('weightsData');
-    if (weightsData === undefined)
+function showTable(id) {
+    let table = document.getElementById(id);
+    if (table === undefined)
         return;
-    weightsData.style.display = 'block';
+    table.style.display = 'block';
 }
 
 function weightTabledeleteRow(index) {
+    //delete a row and criterion
     let obj = document.getElementById("weightTableRow" + index);
     if (obj === undefined)
         return;
     obj.remove();
     appData.deleteCriterion(index);
-    console.log(appData);
 }
 
 function weightTableAddRow() {
+    //add new row and criterion
     let table = document.getElementById('weightsDataBody');
     if (table === undefined)
         return;
-    let index = appData.getCriteriaCount();
-    appData.addCriterion();
+    let criterion = new Criterion.Criterion('', 0);
+    let index = criterion.id;
+    appData.addCriterion(criterion);
     table.appendChild(newWeightTableRowElements(index));
     document.getElementById('deleteCriterionButton' + index).onclick = function() {
         weightTabledeleteRow(index);
     };
-    console.log(appData);
 }
 
 function tableNewColumn(type, columnClassName, params) {
+    //create table cell elements
     let column = document.createElement('div');
     column.className = columnClassName;
     let obj = document.createElement(type);
@@ -45,6 +47,7 @@ function tableNewColumn(type, columnClassName, params) {
 }
 
 function newWeightTableRowElements(index) {
+    //create table row
     let container = document.createElement('div');
     container.className = "divTableRow";
     container.id = "weightTableRow" + index;
@@ -66,11 +69,12 @@ function saveAll() {
 function saveCriteria() {
     let count = appData.getCriteriaCount();
     try {
-        for (let i = 0; i < count; i++) {
-            appData.updateCriterion(i, new Criterion.Criterion(
-                document.getElementById('criterionName' + i).value,
-                document.getElementById('criterionValue' + i).value,
-                document.getElementById('criterionInverted' + i).checked
+        let ids = appData.getCriteriaIDs();
+        for (let i in ids) {
+            appData.updateCriterion(ids[i], new Criterion.Criterion(
+                document.getElementById('criterionName' + ids[i]).value,
+                document.getElementById('criterionValue' + ids[i]).value,
+                document.getElementById('criterionInverted' + ids[i]).checked
             ));
         }
     } catch(e) {
@@ -79,11 +83,15 @@ function saveCriteria() {
     console.log(appData);
 }
 
+//Some event listeners:
+
 document.getElementById('editWeights').onclick = function() {
-    showWeightsTable();
+    showTable('weightsData');
+    saveAll();
 };
 
 document.getElementById('editVariants').onclick = function() {
+    showTable('variantsData');
     saveAll();
 };
 
