@@ -1,21 +1,12 @@
 
-var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-function generate(length) {
-    //generate random sequence
-    var result = '';
-    for (var i = 0; i < length; i++) {
-        result += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
-    }
-    return result;
-}
+let common = require("./common.js");
 
 class Criterion {
     constructor(name, weight, inverted = false) {
-        this.id = generate(16);
-        this.name = name;
-        this.weight = weight;
-        this.is_inverted = inverted;
+        this.id = common.generate(80);
+        this.name = typeof(name) === 'string' ? name : '';
+        this.weight = parseFloat(weight) || 0;
+        this.is_inverted = typeof(inverted) === 'boolean' ? inverted : false;
     }
 
     getName() {
@@ -33,8 +24,7 @@ class Criterion {
             this.name = name;
     }
     setWeight(weight) {
-        if (typeof(weight) === 'number')
-            this.name = weight;
+        this.weight = parseFloat(weight) || 0;
     }
     invert(inverted) {
         if (typeof(inverted) === 'boolean')

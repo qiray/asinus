@@ -1,6 +1,7 @@
 
 let AppData = require("./appdata.js");
 let Criterion = require("./criterion.js");
+let locale = require("./locales/en.js");
 
 let appData = new AppData.AppData(); //application data
 
@@ -62,20 +63,52 @@ function newWeightTableRowElements(index) {
     return container;
 }
 
+function variantsTableHeader() {
+    let result = document.createElement('div');
+    result.className = "divTableRow";
+    let column1 = document.createElement('div');
+    column1.className = "divTableCell";
+    column1.innerHTML = locale.variantName;
+    result.appendChild(column1);
+    let ids = appData.getCriteriaIDs();
+    for (let i in ids) {
+        let headerElement = document.createElement('div');
+        headerElement.className = 'divTableCell';
+        headerElement.innerHTML = appData.getCriterion(ids[i]).name;
+        result.appendChild(headerElement);
+    }
+    return result;
+}
+
+function variantsTableInit() {
+    //add new row and variant
+    let table = document.getElementById('variantsDataBody');
+    if (table === undefined)
+        return;
+    while(table.firstChild) { //clear variants table
+        table.removeChild(table.firstChild);
+    }
+    table.appendChild(variantsTableHeader());
+    //TODO: recreate table
+}
+
+function variantsTableAddRow() {
+
+}
+
 function saveAll() {
     saveCriteria();
 }
 
 function saveCriteria() {
-    let count = appData.getCriteriaCount();
     try {
         let ids = appData.getCriteriaIDs();
         for (let i in ids) {
-            appData.updateCriterion(ids[i], new Criterion.Criterion(
-                document.getElementById('criterionName' + ids[i]).value,
-                document.getElementById('criterionValue' + ids[i]).value,
-                document.getElementById('criterionInverted' + ids[i]).checked
-            ));
+            appData.updateCriterion(ids[i], {
+                name : document.getElementById('criterionName' + ids[i]).value,
+                weight : document.getElementById('criterionValue' + ids[i]).value,
+                inverted : document.getElementById('criterionInverted' + ids[i]).checked
+            });
         }
     } catch(e) {
         console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
@@ -93,12 +126,17 @@ document.getElementById('editWeights').onclick = function() {
 document.getElementById('editVariants').onclick = function() {
     showTable('variantsData');
     saveAll();
+    variantsTableInit();
+};
+
+document.getElementById('showResult').onclick = function() {
+    saveAll();
 };
 
 document.getElementById('weightsPlusButton').onclick = function() {
     weightTableAddRow();
 };
 
-document.getElementById('showResult').onclick = function() {
-    saveAll();
+document.getElementById('variantsPlusButton').onclick = function() {
+    variantsTableAddRow();
 };

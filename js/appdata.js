@@ -32,11 +32,17 @@ class AppData {
         delete this.criteria[id];
         //TODO: change variants
     }
-    updateCriterion(id, criterion) {
-        if (criterion instanceof Criterion.Criterion) {
-            criterion.id = id;
-            this.criteria[id] = criterion;
+    updateCriterion(id, criterionData) {
+        if (typeof(criterionData) === 'object') {
+            this.criteria[id].setName(criterionData.name);
+            this.criteria[id].setWeight(criterionData.weight);
+            this.criteria[id].invert(criterionData.inverted);
         }
+    }
+    getCriterion(id) {
+        if (id in this.criteria)
+            return this.criteria[id];
+        return new Criterion.Criterion('', 0); //Maybe return nil or undefined?
     }
     getCriteriaCount() {
         return Object.keys(this.criteria).length;

@@ -1,6 +1,9 @@
 
+let common = require("./common.js");
+
 class Variant {
     constructor(name, criteria) {
+        this.id = common.generate(80);
         this.name = name;
         this.criteria = criteria;
     }
