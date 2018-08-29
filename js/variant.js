@@ -15,8 +15,8 @@ class Variant {
         if (typeof(name) === 'string')
             this.name = name;
     }
-    deleteCriterion(name) {
-        delete this.criteria[name];
+    deleteCriterion(id) {
+        delete this.criteria[id];
     }
 }
 

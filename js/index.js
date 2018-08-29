@@ -3,7 +3,7 @@ let AppData = require("./appdata.js");
 let Criterion = require("./criterion.js");
 let locale = require("./locales/en.js");
 
-let appData = new AppData.AppData(); //application data
+let appData = new AppData(); //application data
 
 function showTable(id) {
     let table = document.getElementById(id);
