@@ -17,7 +17,7 @@ function createWindow () {
     Menu.setApplicationMenu(menu);
   
     win.loadFile('index.html'); //load html app
-    win.webContents.openDevTools();//enable devtools
+    // win.webContents.openDevTools();//enable devtools
   
     //when windows is closed
     win.on('closed', () => {

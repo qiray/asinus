@@ -1,6 +1,7 @@
 
 var translations = {
-    variantName : "Variant"
+    variantName : "Variant",
+    deleteHeader : "Delete"
 };
 
 module.exports = translations;

@@ -1,6 +1,7 @@
 
 let AppData = require("./appdata.js");
 let Criterion = require("./criterion.js");
+let Variant = require("./variant.js");
 let locale = require("./locales/en.js");
 
 let appData = new AppData(); //application data
@@ -55,7 +56,8 @@ function newWeightTableRowElements(index) {
     container.appendChild(tableNewColumn('input', 'divTableCell', 
         {className : 'tableInput', type : 'text', id : 'criterionName' + index}));
     container.appendChild(tableNewColumn('input', 'divTableCell', 
-        {className : 'tableInput', type : 'number', min : '0', step : '0.01', id : 'criterionValue' + index}));
+        {className : 'tableInput', type : 'number', min : '0', step : '0.01', 
+        id : 'criterionValue' + index}));
     container.appendChild(tableNewColumn('input', 'divTableCellSmall', 
         {type : 'checkbox', id : 'criterionInverted' + index}));
     container.appendChild(tableNewColumn('button', 'divTableCellSmall', 
@@ -77,6 +79,10 @@ function variantsTableHeader() {
         headerElement.innerHTML = appData.getCriterion(ids[i]).name;
         result.appendChild(headerElement);
     }
+    let headerElement = document.createElement('div');
+    headerElement.className = 'divTableCell';
+    headerElement.innerHTML = locale.deleteHeader;
+    result.appendChild(headerElement);
     return result;
 }
 
@@ -93,7 +99,38 @@ function variantsTableInit() {
 }
 
 function variantsTableAddRow() {
+    //add new row and variant
+    let table = document.getElementById('variantsDataBody');
+    if (table === undefined)
+        return;
+    let ids = appData.getCriteriaIDs();
+    let criteria = ids.reduce(function(result, item) {
+        result[item] = "";
+        return result;
+    }, {}); //convert array to object
+    let variant = new Variant.Variant("", criteria);
+    let index = variant.id;
+    appData.addVariant(variant);
+    let result = document.createElement('div');
+    result.className = "divTableRow";
+    result.id = "variantRow" + index;
+    result.appendChild(tableNewColumn('input', 'divTableCell', 
+        {className : 'tableInput', type : 'text', id : 'variantName' + index}));
+    for (let i in ids) {
+        result.appendChild(tableNewColumn('input', 'divTableCell', 
+            {className : 'tableInput', type : 'number', min : '0', 
+            step : '0.01', id : "variant" + index + "criterion" + ids[i]}));
+    }
+    result.appendChild(tableNewColumn('button', 'divTableCellSmall', 
+        {className : 'plusButton', id : 'deleteVariantButton' + index, innerHTML : '-'}));
+    table.appendChild(result);
+    document.getElementById('deleteVariantButton' + index).onclick = function() {
+        variantsTabledeleteRow(index);
+    };
+}
 
+function variantsTabledeleteRow(index) {
+    //TODO:
 }
 
 function saveAll() {

@@ -18,6 +18,9 @@ class Variant {
     deleteCriterion(id) {
         delete this.criteria[id];
     }
+    addCriterion(id) {
+        this.criteria[id] = "";
+    }
 }
 
 module.exports.Variant = Variant;
