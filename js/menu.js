@@ -47,6 +47,7 @@ const template = [
 ];
   
 if (process.platform === 'darwin') {
+    const {app} = require('electron');
     template.unshift({
         label: app.getName(),
         submenu: [
