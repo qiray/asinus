@@ -14,7 +14,7 @@ function showTable(id) {
 }
 
 function weightTabledeleteRow(index) {
-    //delete a row and criterion
+    //delete row and criterion with id = index
     let obj = document.getElementById("weightTableRow" + index);
     if (obj === undefined)
         return;
@@ -130,11 +130,18 @@ function variantsTableAddRow() {
 }
 
 function variantsTabledeleteRow(index) {
-    //TODO:
+    //delete row and variant with id = index
+    let obj = document.getElementById("variantRow" + index);
+    if (obj === undefined)
+        return;
+    obj.remove();
+    appData.deleteVariant(index);
 }
 
 function saveAll() {
     saveCriteria();
+    saveVariants();
+    console.log(appData);
 }
 
 function saveCriteria() {
@@ -150,7 +157,34 @@ function saveCriteria() {
     } catch(e) {
         console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
     }
-    console.log(appData);
+}
+
+function saveVariants() {
+    try {
+        let ids = appData.getVariantsIDs();
+        for (let i in ids) {
+            appData.setVariantName(ids[i], getVariantName(ids[i]));
+            appData.updateVariant(ids[i], getVariantData(ids[i]));
+        }
+    } catch(e) {
+        console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
+    }
+}
+
+function getVariantName(id) {
+    let obj = document.getElementById("variantName" + id);
+    return obj.value;
+}
+
+function getVariantData(id) {
+    //get variant data from html table
+    let result = {};
+    let ids = appData.getCriteriaIDs();
+    for (let i in ids) {
+        let obj = document.getElementById("variant" + id + "criterion" + ids[i]);
+        result[ids[i]] = obj.value;
+    }
+    return result;
 }
 
 //Some event listeners:

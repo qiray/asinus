@@ -19,7 +19,10 @@ class Variant {
         delete this.criteria[id];
     }
     addCriterion(id) {
-        this.criteria[id] = "";
+        this.criteria[id] = 0;
+    }
+    setCriterionValue(id, value) {
+        this.criteria[id] = value;
     }
 }
 

@@ -10,4 +10,9 @@ function generate(length) {
     return result;
 }
 
+function saveJSON(data) {
+    let dialog = remote.require('dialog');
+    let fs = require('fs');
+}
+
 module.exports.generate = generate;

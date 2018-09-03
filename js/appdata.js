@@ -29,11 +29,13 @@ class AppData {
     addCriterion(criterion) {
         if (criterion instanceof Criterion.Criterion)
             this.criteria[criterion.id] = criterion;
-        //TODO: change variants
+        for (let i in this.variants)
+            this.variants[i].addCriterion(criterion.id);
     }
     deleteCriterion(id) {
         delete this.criteria[id];
-        //TODO: change variants
+        for (let i in this.variants)
+            this.variants[i].deleteCriterion(id);
     }
     updateCriterion(id, criterionData) {
         if (id in this.criteria && typeof(criterionData) === 'object') {
@@ -71,14 +73,19 @@ class AppData {
         if (arguments.length == 1) {//update using existing criterias and default values
             for (let i in this.variants[id].criteria) //delete not existing criteria
                 if (!(this.variants[id].criteria[i] in this.criteria))
-                    delete this.variants[id].criteria[i];
+                    this.variants[id].deleteCriterion(i);
             for (let i in this.criteria) //add new criteria
                 if (!(this.criteria[i] in this.variants[id].criteria))
-                    this.variants[id].criteria[i] = 0;
+                    this.variants[id].addCriterion(i);
         }
         if (typeof(variantData) === 'object') {
-            //TODO: update variant with data
+            for (let i in variantData)
+                this.variants[id].setCriterionValue(i, variantData[i]);
         }
+    }
+    setVariantName(id, name) {
+        if (id in this.variants && typeof(name) == 'string')
+            this.variants[id].name = name;
     }
 
     getVariantsCount() {
