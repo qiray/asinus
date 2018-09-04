@@ -1,11 +1,13 @@
 
+let common = require("./common.js");
+
 const template = [
     {
         label: 'File',
         submenu: [
             {label: "New", click() {console.log("New file");}, accelerator: 'CmdOrCtrl+N'},
             {label: "Save"},
-            {label: "Save as"},
+            {label: "Save as", click() {common.saveFileDialog("");}},
             {type: 'separator'},
             {role: 'quit'}
         ]
