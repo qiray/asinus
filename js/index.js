@@ -99,7 +99,6 @@ function variantsTableInit() {
     for (let i in ids) {
         variantsTableAddRow(appData.getVariant(ids[i]));
     }
-    //TODO: recreate table
 }
 
 function variantsTableAddRow(variant = undefined) {
@@ -212,6 +211,7 @@ document.getElementById('editVariants').onclick = function() {
 };
 
 document.getElementById('showResult').onclick = function() {
+    showTable('marksData');
     showResult();
 };
 
