@@ -22,7 +22,13 @@ class Variant {
         this.criteria[id] = 0;
     }
     setCriterionValue(id, value) {
-        this.criteria[id] = value;
+        if (typeof(value) === 'number')
+            this.criteria[id] = value > 0 ? value : 0;
+    }
+    getValue(id) {
+        if (id in this.criteria)
+            return this.criteria[id];
+        return 0;
     }
 }
 

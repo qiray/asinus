@@ -80,7 +80,7 @@ class AppData {
         }
         if (typeof(variantData) === 'object') {
             for (let i in variantData)
-                this.variants[id].setCriterionValue(i, variantData[i]);
+                this.variants[id].setCriterionValue(i, parseFloat(variantData[i]));
         }
     }
     setVariantName(id, name) {

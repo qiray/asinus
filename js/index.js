@@ -95,31 +95,38 @@ function variantsTableInit() {
         table.removeChild(table.firstChild);
     }
     table.appendChild(variantsTableHeader());
+    let ids = appData.getVariantsIDs();
+    for (let i in ids) {
+        variantsTableAddRow(appData.getVariant(ids[i]));
+    }
     //TODO: recreate table
 }
 
-function variantsTableAddRow() {
+function variantsTableAddRow(variant = undefined) {
     //add new row and variant
     let table = document.getElementById('variantsDataBody');
     if (table === undefined)
         return;
     let ids = appData.getCriteriaIDs();
     let criteria = ids.reduce(function(result, item) {
-        result[item] = "";
+        result[item] = 0;
         return result;
     }, {}); //convert array to object
-    let variant = new Variant.Variant("", criteria);
+    if (variant === undefined)
+        variant = new Variant.Variant("", criteria);
     let index = variant.id;
     appData.addVariant(variant);
     let result = document.createElement('div');
     result.className = "divTableRow";
     result.id = "variantRow" + index;
-    result.appendChild(tableNewColumn('input', 'divTableCell', 
-        {className : 'tableInput', type : 'text', id : 'variantName' + index}));
+    result.appendChild(tableNewColumn('input', 'divTableCell',
+        {className : 'tableInput', type : 'text', 
+        id : 'variantName' + index, value : variant.name}));
     for (let i in ids) {
         result.appendChild(tableNewColumn('input', 'divTableCell', 
             {className : 'tableInput', type : 'number', min : '0', 
-            step : '0.01', id : "variant" + index + "criterion" + ids[i]}));
+            step : '0.01', id : "variant" + index + "criterion" + ids[i],
+            value : variant.getValue(ids[i])}));
     }
     result.appendChild(tableNewColumn('button', 'divTableCellSmall', 
         {className : 'plusButton', id : 'deleteVariantButton' + index, innerHTML : '-'}));
@@ -187,6 +194,10 @@ function getVariantData(id) {
     return result;
 }
 
+function showResult() {
+    //TODO: calc result
+}
+
 //Some event listeners:
 
 document.getElementById('editWeights').onclick = function() {
@@ -201,7 +212,7 @@ document.getElementById('editVariants').onclick = function() {
 };
 
 document.getElementById('showResult').onclick = function() {
-    saveAll();
+    showResult();
 };
 
 document.getElementById('weightsPlusButton').onclick = function() {
