@@ -194,6 +194,18 @@ function getVariantData(id) {
 }
 
 function showResult() {
+    showTable('marksData');
+    let table = document.getElementById('marksDataBody');
+    if (table === undefined)
+        return;
+    while(table.firstChild) { //clear table
+        table.removeChild(table.firstChild);
+    }
+    // table.appendChild(variantsTableHeader());
+    // let ids = appData.getVariantsIDs();
+    // for (let i in ids) {
+    //     variantsTableAddRow(appData.getVariant(ids[i]));
+    // }
     //TODO: calc result
 }
 

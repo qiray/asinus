@@ -34,6 +34,14 @@ function saveFile (fileName, data) {
     });
 }
 
+function loadFile (fileName) {
+    //TODO: test
+    let fs = require('fs');
+    var data = fs.readFileSync(fileName);
+    return data;
+}
+
 module.exports.generate = generate;
 module.exports.saveFile = saveFile;
+module.exports.loadFile = loadFile;
 module.exports.saveFileDialog = saveFileDialog;
