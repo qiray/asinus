@@ -94,6 +94,33 @@ class AppData {
     getVariantsIDs() {
         return Object.keys(this.variants);
     }
+
+    calcMarks() {
+        let result = {};
+        for (let i in this.variants) {
+            result[i] = {};
+            for (let j in this.criteria) {
+                result[i][j] = this.variants[i].getValue(j);
+            }
+        }
+        for (let i in this.criteria) {
+            let max = Number.NEGATIVE_INFINITY, min = Number.POSITIVE_INFINITY;
+            for (let j in this.variants) {
+                let value = this.variants[j].getValue(i);
+                if (value > max)
+                    max = value;
+                if (value < min)
+                    min = value;
+            }
+            let isInverted = this.criteria[i].isInverted();
+            for (let j in this.variants) {
+                result[j][i] = this.criteria[i].getWeight()*(isInverted ? min/result[j][i] : result[j][i]/max);
+                if (!Number.isFinite(result[j][i])) //Or maybe throw exception?
+                    result[j][i] = 0;
+            }
+        }
+        return result;
+    }
 }
 
 module.exports = AppData;

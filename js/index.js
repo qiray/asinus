@@ -65,7 +65,7 @@ function newWeightTableRowElements(index) {
     return container;
 }
 
-function variantsTableHeader() {
+function variantsTableHeader(marks = false) {
     let result = document.createElement('div');
     result.className = "divTableRow";
     let column1 = document.createElement('div');
@@ -81,7 +81,11 @@ function variantsTableHeader() {
     }
     let headerElement = document.createElement('div');
     headerElement.className = 'divTableCell';
-    headerElement.innerHTML = locale.deleteHeader;
+    if (marks) {
+        headerElement.innerHTML = locale.total;
+    } else {
+        headerElement.innerHTML = locale.deleteHeader;
+    }
     result.appendChild(headerElement);
     return result;
 }
@@ -91,9 +95,7 @@ function variantsTableInit() {
     let table = document.getElementById('variantsDataBody');
     if (table === undefined)
         return;
-    while(table.firstChild) { //clear variants table
-        table.removeChild(table.firstChild);
-    }
+    clearTable(table);
     table.appendChild(variantsTableHeader());
     let ids = appData.getVariantsIDs();
     for (let i in ids) {
@@ -131,11 +133,36 @@ function variantsTableAddRow(variant = undefined) {
         {className : 'plusButton', id : 'deleteVariantButton' + index, innerHTML : '-'}));
     table.appendChild(result);
     document.getElementById('deleteVariantButton' + index).onclick = function() {
-        variantsTabledeleteRow(index);
+        variantsTableDeleteRow(index);
     };
 }
 
-function variantsTabledeleteRow(index) {
+function marksTableAddRow(variant, data) {
+    //add new row and variant
+    let table = document.getElementById('marksDataBody');
+    if (table === undefined)
+        return;
+    let ids = appData.getCriteriaIDs();
+    let criteria = ids.reduce(function(result, item) {
+        result[item] = 0;
+        return result;
+    }, {}); //convert array to object
+    let index = variant.id;
+    let result = document.createElement('div');
+    result.className = "divTableRow";
+    result.id = "variantRow" + index;
+    result.appendChild(tableNewColumn('div', 'divTableCell',
+        {innerHTML : variant.name}));
+    for (let i in ids) {
+        result.appendChild(tableNewColumn('div', 'divTableCell', 
+            {id : "weight" + index + "criterion" + ids[i], innerHTML : data[ids[i]]}));
+    }
+    result.appendChild(tableNewColumn('div', 'divTableCell', 
+        {id : "weightsSum" + index, innerHTML : ''}));
+    table.appendChild(result);
+}
+
+function variantsTableDeleteRow(index) {
     //delete row and variant with id = index
     let obj = document.getElementById("variantRow" + index);
     if (obj === undefined)
@@ -198,15 +225,25 @@ function showResult() {
     let table = document.getElementById('marksDataBody');
     if (table === undefined)
         return;
-    while(table.firstChild) { //clear table
+    let result = appData.calcMarks();
+    showMarks(result);
+}
+
+function showMarks(data) {
+    let table = document.getElementById('marksDataBody');
+    clearTable(table);
+    table.appendChild(variantsTableHeader(true));
+    let ids = appData.getVariantsIDs();
+    for (let i in ids) {
+        let variant = appData.getVariant(ids[i]);
+        marksTableAddRow(variant, data[ids[i]]);
+    }
+}
+
+function clearTable(table) {
+    while(table.firstChild) {
         table.removeChild(table.firstChild);
     }
-    // table.appendChild(variantsTableHeader());
-    // let ids = appData.getVariantsIDs();
-    // for (let i in ids) {
-    //     variantsTableAddRow(appData.getVariant(ids[i]));
-    // }
-    //TODO: calc result
 }
 
 //Some event listeners:
@@ -223,6 +260,7 @@ document.getElementById('editVariants').onclick = function() {
 };
 
 document.getElementById('showResult').onclick = function() {
+    saveAll();
     showTable('marksData');
     showResult();
 };
