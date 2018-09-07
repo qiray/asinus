@@ -1,10 +1,8 @@
 
-let AppData = require("./appdata.js");
 let Criterion = require("./criterion.js");
 let Variant = require("./variant.js");
 let locale = require("./locales/en.js");
-
-let appData = new AppData(); //application data
+let appData = require("./appdata.js"); //application data
 
 function showTable(id) {
     let table = document.getElementById(id);

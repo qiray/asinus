@@ -7,7 +7,7 @@ const template = [
         submenu: [
             {label: "New", click() {console.log("New file");}, accelerator: 'CmdOrCtrl+N'},
             {label: "Save"},
-            {label: "Save as", click() {common.saveFileDialog("");}},
+            {label: "Save as", click() {common.saveFileDialog();}},
             {type: 'separator'},
             {role: 'quit'}
         ]

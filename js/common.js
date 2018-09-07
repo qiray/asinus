@@ -1,4 +1,6 @@
 
+let appData = require("./appdata.js"); //application data
+
 var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function generate(length) {
@@ -10,7 +12,7 @@ function generate(length) {
     return result;
 }
 
-function saveFileDialog (data) {
+function saveFileDialog () {
     const {dialog} = require('electron');
     dialog.showSaveDialog(
         { 
@@ -21,16 +23,19 @@ function saveFileDialog (data) {
         function (fileName) {
             if (fileName === undefined)
                 return;
-            saveFile(fileName, data);
+            saveFile(fileName, JSON.stringify(appData));
         }
     ); 
 }
 
 function saveFile (fileName, data) {
     let fs = require('fs');
+    console.log(data);
     fs.writeFile(fileName, data, function (err) {
-        console.log(err);
-        console.log("Error saving file " + fileName);
+        if (err) {
+            console.log(err);
+            console.log("Error saving file " + fileName);
+        }
     });
 }
 

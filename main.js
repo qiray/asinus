@@ -8,7 +8,6 @@ const {app, Menu, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
-    // Создаёт окно браузера.
     win = new BrowserWindow({width: 800, height: 600});
 
     //Add menu:

@@ -4,7 +4,7 @@ let Variant = require("./variant.js");
 
 class AppData {
 
-    constructor(name, description = "") {
+    constructor(name = "", description = "") {
         this.name = name;
         this.description = description;
         this.criteria = {};
@@ -123,4 +123,6 @@ class AppData {
     }
 }
 
-module.exports = AppData;
+let appData = new AppData(); //application data
+
+module.exports = appData;
