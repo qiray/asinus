@@ -9,6 +9,7 @@ let win;
 
 function createWindow () {
     win = new BrowserWindow({width: 800, height: 600});
+    global.shared = {appData : {}}; //create global object named 'shared'
 
     //Add menu:
     const menuJS = require('./js/menu.js');

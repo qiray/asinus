@@ -135,6 +135,11 @@ function variantsTableAddRow(variant = undefined) {
     };
 }
 
+function numberFormat(value) {
+    let precision = 1000;
+    return Math.round(value*precision)/precision;
+}
+
 function marksTableAddRow(variant, data) {
     //add new row and variant
     let table = document.getElementById('marksDataBody');
@@ -151,12 +156,14 @@ function marksTableAddRow(variant, data) {
     result.id = "variantRow" + index;
     result.appendChild(tableNewColumn('div', 'divTableCell',
         {innerHTML : variant.name}));
+    let sum = 0;
     for (let i in ids) {
+        sum += data[ids[i]];
         result.appendChild(tableNewColumn('div', 'divTableCell', 
-            {id : "weight" + index + "criterion" + ids[i], innerHTML : data[ids[i]]}));
+            {id : "weight" + index + "criterion" + ids[i], innerHTML : numberFormat(data[ids[i]])}));
     }
     result.appendChild(tableNewColumn('div', 'divTableCell', 
-        {id : "weightsSum" + index, innerHTML : ''}));
+        {id : "weightsSum" + index, innerHTML : numberFormat(sum)}));
     table.appendChild(result);
 }
 
@@ -172,7 +179,7 @@ function variantsTableDeleteRow(index) {
 function saveAll() {
     saveCriteria();
     saveVariants();
-    console.log(appData);
+    require('electron').remote.getGlobal('shared').appData = appData; //send appData to main process
 }
 
 function saveCriteria() {

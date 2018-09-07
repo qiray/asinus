@@ -6,7 +6,7 @@ class Criterion {
         this.id = common.generate(80);
         this.name = typeof(name) === 'string' ? name : '';
         this.weight = parseFloat(weight) || 0;
-        this.is_inverted = typeof(inverted) === 'boolean' ? inverted : false;
+        this.inverted = typeof(inverted) === 'boolean' ? inverted : false;
     }
 
     getName() {
