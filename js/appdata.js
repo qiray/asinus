@@ -123,7 +123,10 @@ class AppData {
         return result;
     }
 
-    restoreFromJSON() {
+    restoreFromJSON(data = undefined) {
+        if (data) {
+            return;
+        }
         for(let i in this.criteria) {
             Object.setPrototypeOf(this.criteria[i], Criterion.Criterion);
         }

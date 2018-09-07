@@ -65,13 +65,11 @@ function loadFileDialog() {
             let data = loadFile(fileNames[0]);
             data = JSON.parse(data);
 
-            Object.setPrototypeOf(data, appData);
-            data.restoreFromJSON();
+            // Object.setPrototypeOf(data, appData);
+            appData.restoreFromJSON(data);
             // require('electron').remote.getGlobal('shared').appData = data;
             console.log(appData);
-            appData = data;
-            console.log(appData);
-            //TODO: change appData
+            //TODO: change appData by appData.key = value no appData = data;
         }
     );
 }
