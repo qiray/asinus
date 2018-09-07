@@ -1,5 +1,7 @@
 
-var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let appData = require("./appdata.js");
+
+let ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 let mainProcess = true;
 
@@ -50,9 +52,7 @@ function saveFile (fileName, data) {
 }
 
 function loadFileDialog() {
-    let {dialog} = require('electron');
-    if (!mainProcess)
-        dialog = require('electron').remote.dialog;
+    const dialog = require('electron').remote.dialog;
     dialog.showOpenDialog(
         { 
             filters: [
@@ -64,13 +64,14 @@ function loadFileDialog() {
                 return;
             let data = loadFile(fileNames[0]);
             data = JSON.parse(data);
-            let appData = require("./appdata.js");
-            Object.assign(appData, data);
-            if (mainProcess)
-                global.shared.appData = appData;
-            else
-                require('electron').remote.getGlobal('shared').appData = appData;
-            //TODO: redraw tables
+
+            Object.setPrototypeOf(data, appData);
+            data.restoreFromJSON();
+            // require('electron').remote.getGlobal('shared').appData = data;
+            console.log(appData);
+            appData = data;
+            console.log(appData);
+            //TODO: change appData
         }
     );
 }

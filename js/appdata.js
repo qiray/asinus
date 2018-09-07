@@ -5,6 +5,7 @@ let Variant = require("./variant.js");
 class AppData {
 
     constructor(name = "", description = "") {
+        console.log("CREATE!");
         this.name = name;
         this.description = description;
         this.criteria = {};
@@ -120,6 +121,15 @@ class AppData {
             }
         }
         return result;
+    }
+
+    restoreFromJSON() {
+        for(let i in this.criteria) {
+            Object.setPrototypeOf(this.criteria[i], Criterion.Criterion);
+        }
+        for(let i in this.variants) {
+            Object.setPrototypeOf(this.variants[i], Variant.Variant);
+        }
     }
 }
 

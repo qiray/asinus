@@ -4,6 +4,12 @@ let Variant = require("./variant.js");
 let locale = require("./locales/en.js");
 let appData = require("./appdata.js"); //application data
 
+//Create menu:
+const menuJS = require('./menu.js');
+const {Menu} = require('electron').remote;
+const menu = Menu.buildFromTemplate(menuJS.template);
+Menu.setApplicationMenu(menu);
+
 function showTable(id) {
     let table = document.getElementById(id);
     if (table === undefined)
@@ -180,6 +186,7 @@ function saveAll() {
     saveCriteria();
     saveVariants();
     require('electron').remote.getGlobal('shared').appData = appData; //send appData to main process
+    console.log(appData);
 }
 
 function saveCriteria() {
