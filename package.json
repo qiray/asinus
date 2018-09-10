@@ -15,6 +15,6 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/qiray/asinus#readme",
   "devDependencies": {
-    "electron": "^2.0.7"
+    "electron": "^2.0.8"
   }
 }

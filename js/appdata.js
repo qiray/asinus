@@ -5,7 +5,6 @@ let Variant = require("./variant.js");
 class AppData {
 
     constructor(name = "", description = "") {
-        console.log("CREATE!");
         this.name = name;
         this.description = description;
         this.criteria = {};
@@ -113,18 +112,41 @@ class AppData {
                 if (value < min)
                     min = value;
             }
+            max = max > 0 ? max : 1;
             let isInverted = this.criteria[i].isInverted();
+            let weight = this.criteria[i].getWeight();
             for (let j in this.variants) {
-                result[j][i] = this.criteria[i].getWeight()*(isInverted ? min/result[j][i] : result[j][i]/max);
-                if (!Number.isFinite(result[j][i])) //Or maybe throw exception?
+                if (isInverted) {
+                    //if current value is 0 then let it be the max else compute as usual:
+                    result[j][i] = weight*(result[j][i] == 0 ? 1 : min/result[j][i]);
+                } else {
+                    result[j][i] = weight*result[j][i]/max;
+                }
+                if (!Number.isFinite(result[j][i])) //Or maybe throw an exception?
                     result[j][i] = 0;
             }
         }
         return result;
     }
 
-    restoreFromJSON(data = undefined) {
+    buildFromJSON(data) {
         if (data) {
+            for(let i in this.criteria)
+                delete this.criteria[i];
+            for(let i in this.variants)
+                delete this.variants[i];
+            this.name = data.name;
+            this.description = data.description;
+            let criterion = new Criterion.Criterion("", 0);
+            for(let i in data.criteria) {
+                criterion = Object.assign(new Criterion.Criterion, data.criteria[i]);
+                this.addCriterion(criterion);
+            }
+            let variant = new Variant.Variant("", {});
+            for(let i in data.variants) {
+                variant = Object.assign(new Variant.Variant, data.variants[i]);
+                this.addVariant(variant);
+            }
             return;
         }
         for(let i in this.criteria) {

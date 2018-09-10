@@ -1,5 +1,6 @@
 
 let appData = require("./appdata.js");
+let index = require("./index.js");
 
 let ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -63,13 +64,10 @@ function loadFileDialog() {
             if (fileNames === undefined)
                 return;
             let data = loadFile(fileNames[0]);
-            data = JSON.parse(data);
-
-            // Object.setPrototypeOf(data, appData);
-            appData.restoreFromJSON(data);
+            appData.buildFromJSON(JSON.parse(data));
+            index.redrawAll();
             // require('electron').remote.getGlobal('shared').appData = data;
-            console.log(appData);
-            //TODO: change appData by appData.key = value no appData = data;
+            //TODO: correct redraw all tables
         }
     );
 }

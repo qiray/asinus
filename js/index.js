@@ -52,18 +52,20 @@ function tableNewColumn(type, columnClassName, params) {
     return column;
 }
 
-function newWeightTableRowElements(index) {
+function newWeightTableRowElements(index, obj) {
     //create table row
     let container = document.createElement('div');
     container.className = "divTableRow";
     container.id = "weightTableRow" + index;
     container.appendChild(tableNewColumn('input', 'divTableCell', 
-        {className : 'tableInput', type : 'text', id : 'criterionName' + index}));
+        {className : 'tableInput', type : 'text', id : 'criterionName' + index,
+        value : obj ? obj.getName() : ''}));
     container.appendChild(tableNewColumn('input', 'divTableCell', 
         {className : 'tableInput', type : 'number', min : '0', step : '0.01', 
-        id : 'criterionValue' + index}));
+        id : 'criterionValue' + index, value : obj ? obj.getWeight() : '0'}));
     container.appendChild(tableNewColumn('input', 'divTableCellSmall', 
-        {type : 'checkbox', id : 'criterionInverted' + index}));
+        {type : 'checkbox', id : 'criterionInverted' + index,
+        checked : obj ? obj.isInverted() : false}));
     container.appendChild(tableNewColumn('button', 'divTableCellSmall', 
         {className : 'plusButton', id : 'deleteCriterionButton' + index, innerHTML : '-'}));
     return container;
@@ -72,26 +74,46 @@ function newWeightTableRowElements(index) {
 function variantsTableHeader(marks = false) {
     let result = document.createElement('div');
     result.className = "divTableRow";
-    let column1 = document.createElement('div');
-    column1.className = "divTableCell";
-    column1.innerHTML = locale.variantName;
-    result.appendChild(column1);
+    result.appendChild(headerElement(locale.variantName));
     let ids = appData.getCriteriaIDs();
     for (let i in ids) {
-        let headerElement = document.createElement('div');
-        headerElement.className = 'divTableCell';
-        headerElement.innerHTML = appData.getCriterion(ids[i]).name;
-        result.appendChild(headerElement);
+        result.appendChild(headerElement(appData.getCriterion(ids[i]).name));
     }
-    let headerElement = document.createElement('div');
-    headerElement.className = 'divTableCell';
-    if (marks) {
-        headerElement.innerHTML = locale.total;
-    } else {
-        headerElement.innerHTML = locale.deleteHeader;
-    }
-    result.appendChild(headerElement);
+    result.appendChild(headerElement(marks ? locale.total : locale.deleteHeader));
     return result;
+}
+
+function headerElement(name) {
+    let result = document.createElement('div');
+    result.className = 'divTableCell';
+    result.innerHTML = name;
+    return result;
+}
+
+function weightsTableHeader() {
+    let result = document.createElement('div');
+    result.className = "divTableRow";
+    result.appendChild(headerElement(locale.weightName));
+    result.appendChild(headerElement(locale.weight));
+    result.appendChild(headerElement(locale.inverted));
+    result.appendChild(headerElement(locale.deleteHeader));
+    return result;
+}
+
+function weightsTableInit() {
+    //add new row and variant
+    let table = document.getElementById('weightsDataBody');
+    if (table === undefined)
+        return;
+    clearTable(table);
+    table.appendChild(weightsTableHeader());
+    let ids = appData.getCriteriaIDs();
+    for (let i in ids) {
+        table.appendChild(newWeightTableRowElements(ids[i], appData.getCriterion(ids[i])));
+        document.getElementById('deleteCriterionButton' + ids[i]).onclick = function() {
+            weightTabledeleteRow(ids[i]);
+        };
+    }
 }
 
 function variantsTableInit() {
@@ -258,11 +280,18 @@ function clearTable(table) {
     }
 }
 
+function redrawAll() {
+    weightsTableInit();
+    variantsTableInit();
+    showResult();
+}
+
 //Some event listeners:
 
 document.getElementById('editWeights').onclick = function() {
     showTable('weightsData');
     saveAll();
+    weightsTableInit();
 };
 
 document.getElementById('editVariants').onclick = function() {
@@ -284,3 +313,7 @@ document.getElementById('weightsPlusButton').onclick = function() {
 document.getElementById('variantsPlusButton').onclick = function() {
     variantsTableAddRow();
 };
+
+//Export:
+
+module.exports.redrawAll = redrawAll;
