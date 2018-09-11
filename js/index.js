@@ -101,7 +101,9 @@ function weightsTableHeader() {
 }
 
 function weightsTableInit() {
-    //add new row and variant
+    let title = document.getElementById('criteriaTitle');
+    if (title)
+        title.innerHTML = locale.criteria;
     let table = document.getElementById('weightsDataBody');
     if (table === undefined)
         return;
@@ -117,7 +119,9 @@ function weightsTableInit() {
 }
 
 function variantsTableInit() {
-    //add new row and variant
+    let title = document.getElementById('variantsTitle');
+    if (title)
+        title.innerHTML = locale.variants;
     let table = document.getElementById('variantsDataBody');
     if (table === undefined)
         return;
@@ -255,6 +259,9 @@ function getVariantData(id) {
 }
 
 function showResult() {
+    let title = document.getElementById('marksTitle');
+    if (title)
+        title.innerHTML = locale.marks;
     showTable('marksData');
     let table = document.getElementById('marksDataBody');
     if (table === undefined)
@@ -302,7 +309,6 @@ document.getElementById('editVariants').onclick = function() {
 
 document.getElementById('showResult').onclick = function() {
     saveAll();
-    showTable('marksData');
     showResult();
 };
 

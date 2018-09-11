@@ -67,7 +67,6 @@ function loadFileDialog() {
             appData.buildFromJSON(JSON.parse(data));
             index.redrawAll();
             // require('electron').remote.getGlobal('shared').appData = data;
-            //TODO: correct redraw all tables
         }
     );
 }

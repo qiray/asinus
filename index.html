@@ -7,46 +7,55 @@
     </head>
     <body>
         <!-- TODO: style this file -->
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <button class="mainMenuButton" id="editWeights">Edit weights</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button class="mainMenuButton" id="editVariants">Edit variants</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button class="mainMenuButton" id="showResult">Show result</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div style="display: none;" id="weightsData">
-            <h3>Criteria</h3>
-            <div class="divTable blueTable">
-                <div class="divTableBody" id="weightsDataBody">
-                </div>
-            </div>
-            <button class="plusButton" id="weightsPlusButton">+</button>
-        </div>
-        <div style="display: none;" id="variantsData">
-            <h3>Variants</h3>
-            <div class="divTable blueTable">
-                <div class="divTableBody" id="variantsDataBody">
-                </div>
-            </div>
-            <button class="plusButton" id="variantsPlusButton">+</button>
-        </div>
-        <div style="display: none;" id="marksData">
-            <h3>Marks</h3>
-            <div class="divTable blueTable">
-                <div class="divTableBody" id="marksDataBody">
+        <div class="divTable mainTable">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                    <div class="divTableCell menuCell">
+                        <table class="menuTable">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <button class="mainMenuButton button_blue" id="editWeights">Edit weights</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button class="mainMenuButton button_blue" id="editVariants">Edit variants</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button class="mainMenuButton button_blue" id="showResult">Show result</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="divTableCell">
+                        <div style="display: none;" id="weightsData">
+                            <h3 id = 'criteriaTitle'></h3>
+                            <div class="divTable blueTable">
+                                <div class="divTableBody" id="weightsDataBody">
+                                </div>
+                            </div>
+                            <button class="plusButton" id="weightsPlusButton">+</button>
+                        </div>
+                        <div style="display: none;" id="variantsData">
+                            <h3 id = 'variantsTitle'></h3>
+                            <div class="divTable blueTable">
+                                <div class="divTableBody" id="variantsDataBody">
+                                </div>
+                            </div>
+                            <button class="plusButton" id="variantsPlusButton">+</button>
+                        </div>
+                        <div style="display: none;" id="marksData">
+                            <h3 id = 'marksTitle'></h3>
+                            <div class="divTable blueTable">
+                                <div class="divTableBody" id="marksDataBody">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
