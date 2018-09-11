@@ -17,6 +17,13 @@ function showTable(id) {
     table.style.display = 'block';
 }
 
+function hideTable(id) {
+    let table = document.getElementById(id);
+    if (table === undefined)
+        return;
+    table.style.display = 'none';
+}
+
 function weightTabledeleteRow(index) {
     //delete row and criterion with id = index
     let obj = document.getElementById("weightTableRow" + index);
@@ -290,24 +297,32 @@ function clearTable(table) {
 function redrawAll() {
     weightsTableInit();
     variantsTableInit();
+    hideTable('weightsData');
+    hideTable('variantsData');
     showResult();
 }
 
 //Some event listeners:
 
 document.getElementById('editWeights').onclick = function() {
+    hideTable('variantsData');
+    hideTable('marksData');
     showTable('weightsData');
     saveAll();
     weightsTableInit();
 };
 
 document.getElementById('editVariants').onclick = function() {
+    hideTable('weightsData');
+    hideTable('marksData');
     showTable('variantsData');
     saveAll();
     variantsTableInit();
 };
 
 document.getElementById('showResult').onclick = function() {
+    hideTable('weightsData');
+    hideTable('variantsData');
     saveAll();
     showResult();
 };

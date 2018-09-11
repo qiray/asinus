@@ -81,14 +81,17 @@ div.blueTable {
 .tableInput {
     width: 99%;
 }
-.menuTable {
+.centerItem {
     width: 100%; 
     position: absolute; 
     top: 50%; 
     transform: translateY(-50%);
 }
-.menuCell {
+.leftCell {
     width: 25%; 
+    position: relative;
+}
+.rightCell {
     position: relative;
 }
 .mainTable {
