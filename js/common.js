@@ -32,6 +32,7 @@ function saveFileDialog () {
         function (fileName) {
             if (fileName === undefined)
                 return;
+            index.saveAll();
             let data = {};
             if (mainProcess)
                 data = global.shared.appData; //get appData from global scope

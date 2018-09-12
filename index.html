@@ -15,23 +15,38 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <button class="mainMenuButton button_blue" id="editWeights">Edit weights</button>
+                                        <button class="mainMenuButton button_blue" id="editName"></button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <button class="mainMenuButton button_blue" id="editVariants">Edit variants</button>
+                                        <button class="mainMenuButton button_blue" id="editWeights"></button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <button class="mainMenuButton button_blue" id="showResult">Show result</button>
+                                        <button class="mainMenuButton button_blue" id="editVariants"></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button class="mainMenuButton button_blue" id="showResult"></button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="divTableCell rightCell">
+                        <div class="centerItem" style="display: none;" id="nameData">
+                            <div>
+                                <div id="nameTitle"></div>
+                                <input id="nameInput" type="text" class="nameInput">
+                            </div>
+                            <div>
+                                <div id="descTitle"></div>
+                                <textarea id="descInput" class="descInput"></textarea>
+                            </div>
+                        </div>
                         <div class="centerItem" style="display: none;" id="weightsData">
                             <h3 id = 'criteriaTitle'></h3>
                             <div class="divTable blueTable">

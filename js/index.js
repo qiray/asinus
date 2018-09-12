@@ -218,6 +218,7 @@ function variantsTableDeleteRow(index) {
 function saveAll() {
     saveCriteria();
     saveVariants();
+    saveName();
     require('electron').remote.getGlobal('shared').appData = appData; //send appData to main process
     console.log(appData);
 }
@@ -247,6 +248,18 @@ function saveVariants() {
     } catch(e) {
         console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
     }
+}
+
+function saveName() {
+    let name = document.getElementById("nameInput").value;
+    appData.setName(name);
+    let desc = document.getElementById("descInput").value;
+    appData.setDescription(desc);
+}
+
+function nameInit() {
+    document.getElementById("nameInput").value = appData.getName();
+    document.getElementById("descInput").value = appData.getDescription();
 }
 
 function getVariantName(id) {
@@ -295,18 +308,37 @@ function clearTable(table) {
 }
 
 function redrawAll() {
+    nameInit();
     weightsTableInit();
     variantsTableInit();
     hideTable('weightsData');
     hideTable('variantsData');
-    showResult();
+    hideTable('marksData');
+    showTable('nameData');
 }
 
+//Some texts:
+
+document.getElementById('nameTitle').innerHTML = locale.menu.name;
+document.getElementById('descTitle').innerHTML = locale.menu.desc;
+document.getElementById('editName').innerHTML = locale.menu.name;
+document.getElementById('editWeights').innerHTML = locale.menu.weights;
+document.getElementById('editVariants').innerHTML = locale.menu.variants;
+document.getElementById('showResult').innerHTML = locale.menu.result;
+
 //Some event listeners:
+
+document.getElementById('editName').onclick = function() {
+    hideTable('variantsData');
+    hideTable('marksData');
+    hideTable('weightsData');
+    showTable('nameData');
+}
 
 document.getElementById('editWeights').onclick = function() {
     hideTable('variantsData');
     hideTable('marksData');
+    hideTable('nameData');
     showTable('weightsData');
     saveAll();
     weightsTableInit();
@@ -315,6 +347,7 @@ document.getElementById('editWeights').onclick = function() {
 document.getElementById('editVariants').onclick = function() {
     hideTable('weightsData');
     hideTable('marksData');
+    hideTable('nameData');
     showTable('variantsData');
     saveAll();
     variantsTableInit();
@@ -323,6 +356,7 @@ document.getElementById('editVariants').onclick = function() {
 document.getElementById('showResult').onclick = function() {
     hideTable('weightsData');
     hideTable('variantsData');
+    hideTable('nameData');
     saveAll();
     showResult();
 };
@@ -338,3 +372,4 @@ document.getElementById('variantsPlusButton').onclick = function() {
 //Export:
 
 module.exports.redrawAll = redrawAll;
+module.exports.saveAll = saveAll;

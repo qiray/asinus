@@ -8,7 +8,15 @@ var translations = {
     total : "Total",
     criteria : "Criteria",
     variants : "Variants",
-    marks : "Marks"
+    marks : "Marks",
+
+    menu : {
+        name : "Name",
+        weights : "Weights",
+        variants : "Variants",
+        result : "Result",
+        desc : "Description"
+    }
 };
 
 module.exports = translations;

@@ -101,6 +101,15 @@ div.blueTable {
     text-align: left;
     border-collapse: collapse;
 }
+.nameInput {
+    width: 95%;
+}
+.descInput {
+    max-width: 95%;
+    min-width: 95%;
+    width: 95%;
+    height: 20em;
+}
 
 /* input[type="checkbox"]{
     width: 2em;
