@@ -8,7 +8,7 @@ const {app, Menu, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
-    win = new BrowserWindow({width: 800, height: 600});
+    win = new BrowserWindow({width: 800, height: 600, minWidth: 800, minHeight: 600});
     global.shared = {appData : {}}; //create global object named 'shared'
   
     win.loadFile('index.html'); //load html app

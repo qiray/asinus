@@ -139,12 +139,12 @@ class AppData {
             this.description = data.description;
             let criterion = new Criterion.Criterion("", 0);
             for(let i in data.criteria) {
-                criterion = Object.assign(new Criterion.Criterion, data.criteria[i]);
+                criterion = Object.assign(new Criterion.Criterion(), data.criteria[i]);
                 this.addCriterion(criterion);
             }
             let variant = new Variant.Variant("", {});
             for(let i in data.variants) {
-                variant = Object.assign(new Variant.Variant, data.variants[i]);
+                variant = Object.assign(new Variant.Variant(), data.variants[i]);
                 this.addVariant(variant);
             }
             return;
@@ -155,6 +155,12 @@ class AppData {
         for(let i in this.variants) {
             Object.setPrototypeOf(this.variants[i], Variant.Variant);
         }
+    }
+    clear() {
+        this.name = "";
+        this.description = "";
+        this.criteria = {};
+        this.variants = {};
     }
 }
 

@@ -78,7 +78,13 @@ function loadFile (fileName) {
     return data;
 }
 
+function clearData() {
+    appData.clear();
+    index.redrawAll();
+}
+
 module.exports.generate = generate;
+module.exports.clearData = clearData;
 module.exports.saveFile = saveFile;
 module.exports.loadFile = loadFile;
 module.exports.loadFileDialog = loadFileDialog;

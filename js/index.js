@@ -65,10 +65,10 @@ function newWeightTableRowElements(index, obj) {
     container.className = "divTableRow";
     container.id = "weightTableRow" + index;
     container.appendChild(tableNewColumn('input', 'divTableCell', 
-        {className : 'tableInput', type : 'text', id : 'criterionName' + index,
+        {className : 'input tableInput', type : 'text', id : 'criterionName' + index,
         value : obj ? obj.getName() : ''}));
     container.appendChild(tableNewColumn('input', 'divTableCell', 
-        {className : 'tableInput', type : 'number', min : '0', step : '0.01', 
+        {className : 'input tableInput', type : 'number', min : '0', step : '0.01', 
         id : 'criterionValue' + index, value : obj ? obj.getWeight() : '0'}));
     container.appendChild(tableNewColumn('input', 'divTableCellSmall', 
         {type : 'checkbox', id : 'criterionInverted' + index,
@@ -165,11 +165,11 @@ function variantsTableAddRow(variant = undefined) {
     result.className = "divTableRow";
     result.id = "variantRow" + index;
     result.appendChild(tableNewColumn('input', 'divTableCell',
-        {className : 'tableInput', type : 'text', 
+        {className : 'input tableInput', type : 'text', 
         id : 'variantName' + index, value : variant.name}));
     for (let i in ids) {
         result.appendChild(tableNewColumn('input', 'divTableCell', 
-            {className : 'tableInput', type : 'number', min : '0', 
+            {className : 'input tableInput', type : 'number', min : '0', 
             step : '0.01', id : "variant" + index + "criterion" + ids[i],
             value : variant.getValue(ids[i])}));
     }
@@ -227,7 +227,6 @@ function saveAll() {
     saveVariants();
     saveName();
     require('electron').remote.getGlobal('shared').appData = appData; //send appData to main process
-    console.log(appData);
 }
 
 function saveCriteria() {

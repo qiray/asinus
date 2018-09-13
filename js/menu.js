@@ -5,7 +5,7 @@ const template = [
     {
         label: 'File',
         submenu: [
-            {label: "New", click() {console.log("New file");}, accelerator: 'CmdOrCtrl+N'},
+            {label: "New", click() {common.clearData();}, accelerator: 'CmdOrCtrl+N'},
             {label: "Open", click() {common.loadFileDialog();}, accelerator: 'CmdOrCtrl+O'},
             {label: "Save", accelerator: 'CmdOrCtrl+S'},
             {label: "Save as", click() {common.saveFileDialog();}, accelerator: 'CmdOrCtrl+shift+S'},
@@ -38,7 +38,7 @@ const template = [
         submenu: [
             {label: "Help"},
             {label: "About", click() {
-                const {dialog} = require('electron');
+                const dialog = require('electron').remote.dialog;
                 dialog.showMessageBox({
                     title: "About",
                     buttons: ["OK"],
@@ -50,7 +50,6 @@ const template = [
 ];
   
 if (process.platform === 'darwin') {
-
     const app = require('electron').remote.app;
     template.unshift({
         label: app.getName(),
@@ -71,7 +70,7 @@ if (process.platform === 'darwin') {
 function getAboutInfo() {
     let package = require('../package.json');
     return package.name + " " + package.version + "\n" +
-        "Made with Node.js " + process.versions.node + ", Chrome " + 
+        "Runs with Node.js " + process.versions.node + ", Chrome " + 
         process.versions.chrome + ", Electron " + process.versions.electron + ".";
 }
 
