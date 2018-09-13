@@ -68,10 +68,12 @@ if (process.platform === 'darwin') {
 }
 
 function getAboutInfo() {
+    //TODO: style this info
     let package = require('../package.json');
     return package.name + " " + package.version + "\n" +
         "Runs with Node.js " + process.versions.node + ", Chrome " + 
-        process.versions.chrome + ", Electron " + process.versions.electron + ".";
+        process.versions.chrome + ", Electron " + process.versions.electron + ".\n" +
+        "App icon made by <a href=\"http://www.freepik.com\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div>";
 }
 
 module.exports.template = template; //export template for usage in other modules

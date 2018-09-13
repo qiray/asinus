@@ -81,12 +81,12 @@ function newWeightTableRowElements(index, obj) {
 function variantsTableHeader(marks = false) {
     let result = document.createElement('div');
     result.className = "divTableRow";
-    result.appendChild(headerElement(locale.variantName, 0,
-        marks ? "marksDataBody" : "variantsDataBody"));
+    result.appendChild(headerElement(locale.variantName, 
+        marks ? 0 : null, "marksDataBody"));
     let ids = appData.getCriteriaIDs();
     for (let i in ids) {
         result.appendChild(headerElement(appData.getCriterion(ids[i]).name,
-            Number(i) + 1, marks ? "marksDataBody" : "variantsDataBody"));
+            marks ? Number(i) + 1 : null, "marksDataBody"));
     }
     result.appendChild(headerElement(marks ? locale.total : locale.deleteHeader,
         marks ? ids.length : null, "marksDataBody"));
@@ -343,18 +343,18 @@ function sortTable(tableName, n) {
             shouldSwitch = false;
             /*Get the two elements you want to compare,
             one from current row and one from the next:*/
-            x = rows[i].getElementsByTagName("div")[n];
-            y = rows[i + 1].getElementsByTagName("div")[n];
+            x = rows[i].childNodes[n];
+            y = rows[i + 1].childNodes[n];
             /*check if the two rows should switch place,
             based on the direction, asc or desc:*/
             if (dir == "asc") {
-            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                //if so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-            }
+                if (x.firstChild.innerHTML.toLowerCase() > y.firstChild.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
             } else if (dir == "desc") {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                if (x.firstChild.innerHTML.toLowerCase() < y.firstChild.innerHTML.toLowerCase()) {
                     //if so, mark as a switch and break the loop:
                     shouldSwitch = true;
                     break;
@@ -390,14 +390,14 @@ document.getElementById('showResult').innerHTML = locale.menu.result;
 
 //Some event listeners:
 
-document.getElementById('editName').onclick = function() {
+document.getElementById('editName').onmousedown = function() {
     hideTable('variantsData');
     hideTable('marksData');
     hideTable('weightsData');
     showTable('nameData');
 };
 
-document.getElementById('editWeights').onclick = function() {
+document.getElementById('editWeights').onmousedown = function() {
     hideTable('variantsData');
     hideTable('marksData');
     hideTable('nameData');
@@ -406,7 +406,7 @@ document.getElementById('editWeights').onclick = function() {
     weightsTableInit();
 };
 
-document.getElementById('editVariants').onclick = function() {
+document.getElementById('editVariants').onmousedown = function() {
     hideTable('weightsData');
     hideTable('marksData');
     hideTable('nameData');
@@ -415,7 +415,7 @@ document.getElementById('editVariants').onclick = function() {
     variantsTableInit();
 };
 
-document.getElementById('showResult').onclick = function() {
+document.getElementById('showResult').onmousedown = function() {
     hideTable('weightsData');
     hideTable('variantsData');
     hideTable('nameData');
