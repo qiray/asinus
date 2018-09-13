@@ -81,19 +81,24 @@ function newWeightTableRowElements(index, obj) {
 function variantsTableHeader(marks = false) {
     let result = document.createElement('div');
     result.className = "divTableRow";
-    result.appendChild(headerElement(locale.variantName));
+    result.appendChild(headerElement(locale.variantName, 0,
+        marks ? "marksDataBody" : "variantsDataBody"));
     let ids = appData.getCriteriaIDs();
     for (let i in ids) {
-        result.appendChild(headerElement(appData.getCriterion(ids[i]).name));
+        result.appendChild(headerElement(appData.getCriterion(ids[i]).name,
+            Number(i) + 1, marks ? "marksDataBody" : "variantsDataBody"));
     }
-    result.appendChild(headerElement(marks ? locale.total : locale.deleteHeader));
+    result.appendChild(headerElement(marks ? locale.total : locale.deleteHeader,
+        marks ? ids.length : null, "marksDataBody"));
     return result;
 }
 
-function headerElement(name) {
+function headerElement(name, index, tableName) {
     let result = document.createElement('div');
     result.className = 'divTableCell';
     result.innerHTML = name;
+    if (typeof(index) === 'number') //add sort functionality
+        result.onclick = function() {sortTable(tableName, index);};
     return result;
 }
 
@@ -119,9 +124,11 @@ function weightsTableInit() {
     let ids = appData.getCriteriaIDs();
     for (let i in ids) {
         table.appendChild(newWeightTableRowElements(ids[i], appData.getCriterion(ids[i])));
-        document.getElementById('deleteCriterionButton' + ids[i]).onclick = function() {
-            weightTabledeleteRow(ids[i]);
-        };
+        let index = ids[i];
+        document.getElementById('deleteCriterionButton' + index).onclick = (
+            function(index) {return function() {
+            weightTabledeleteRow(index);
+        };})(index);
     }
 }
 
@@ -317,6 +324,62 @@ function redrawAll() {
     showTable('nameData');
 }
 
+function sortTable(tableName, n) {
+    //from https://www.w3schools.com/howto/howto_js_sort_table.asp
+    let rows, i, x, y, shouldSwitch, switchcount = 0;
+    let table = document.getElementById(tableName);
+    let switching = true;
+    //Set the sorting direction to ascending:
+    let dir = "asc"; 
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+        //start by saying: no switching is done:
+        switching = false;
+        rows = table.childNodes;
+        /*Loop through all table rows (except the
+        first, which contains table headers):*/
+        for (i = 1; i < (rows.length - 1); i++) {
+            //start by saying there should be no switching:
+            shouldSwitch = false;
+            /*Get the two elements you want to compare,
+            one from current row and one from the next:*/
+            x = rows[i].getElementsByTagName("div")[n];
+            y = rows[i + 1].getElementsByTagName("div")[n];
+            /*check if the two rows should switch place,
+            based on the direction, asc or desc:*/
+            if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                //if so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+            }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            /*If a switch has been marked, make the switch
+            and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount++;
+        } else {
+            /*If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+
 //Some texts:
 
 document.getElementById('nameTitle').innerHTML = locale.menu.name;
@@ -333,7 +396,7 @@ document.getElementById('editName').onclick = function() {
     hideTable('marksData');
     hideTable('weightsData');
     showTable('nameData');
-}
+};
 
 document.getElementById('editWeights').onclick = function() {
     hideTable('variantsData');

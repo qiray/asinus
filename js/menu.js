@@ -6,9 +6,9 @@ const template = [
         label: 'File',
         submenu: [
             {label: "New", click() {console.log("New file");}, accelerator: 'CmdOrCtrl+N'},
-            {label: "Open", click() {common.loadFileDialog();}},
-            {label: "Save"},
-            {label: "Save as", click() {common.saveFileDialog();}},
+            {label: "Open", click() {common.loadFileDialog();}, accelerator: 'CmdOrCtrl+O'},
+            {label: "Save", accelerator: 'CmdOrCtrl+S'},
+            {label: "Save as", click() {common.saveFileDialog();}, accelerator: 'CmdOrCtrl+shift+S'},
             {type: 'separator'},
             {role: 'quit'}
         ]
