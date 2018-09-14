@@ -1,0 +1,19 @@
+{
+    "variantName" : "Вариант",
+    "weightName" : "Название",
+    "weight" : "Вес",
+    "inverted" : "Обратный",
+    "deleteHeader" : "Удалить",
+    "total" : "Итого",
+    "criteria" : "Критерии",
+    "variants" : "Варианты",
+    "marks" : "Оценки",
+    "menu" : {
+        "name" : "Имя",
+        "weights" : "Веса",
+        "variants" : "Варианты",
+        "result" : "Результат",
+        "settings" : "Настройки",
+        "desc" : "Описание"
+    }
+}

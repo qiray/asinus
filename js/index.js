@@ -1,7 +1,7 @@
 
 let Criterion = require("./criterion.js");
 let Variant = require("./variant.js");
-let locale = require("./locales/en.js");
+let locale = new (require("./locale.js"))();
 let appData = require("./appdata.js"); //application data
 
 //Create menu:
@@ -81,14 +81,14 @@ function newWeightTableRowElements(index, obj) {
 function variantsTableHeader(marks = false) {
     let result = document.createElement('div');
     result.className = "divTableRow";
-    result.appendChild(headerElement(locale.variantName, 
+    result.appendChild(headerElement(locale.translate('variantName'), 
         marks ? 0 : null, "marksDataBody"));
     let ids = appData.getCriteriaIDs();
     for (let i in ids) {
         result.appendChild(headerElement(appData.getCriterion(ids[i]).name,
             marks ? Number(i) + 1 : null, "marksDataBody"));
     }
-    result.appendChild(headerElement(marks ? locale.total : locale.deleteHeader,
+    result.appendChild(headerElement(marks ? locale.translate('total') : locale.translate('deleteHeader'),
         marks ? ids.length : null, "marksDataBody"));
     return result;
 }
@@ -105,17 +105,17 @@ function headerElement(name, index, tableName) {
 function weightsTableHeader() {
     let result = document.createElement('div');
     result.className = "divTableRow";
-    result.appendChild(headerElement(locale.weightName));
-    result.appendChild(headerElement(locale.weight));
-    result.appendChild(headerElement(locale.inverted));
-    result.appendChild(headerElement(locale.deleteHeader));
+    result.appendChild(headerElement(locale.translate('weightName')));
+    result.appendChild(headerElement(locale.translate('weight')));
+    result.appendChild(headerElement(locale.translate('inverted')));
+    result.appendChild(headerElement(locale.translate('deleteHeader')));
     return result;
 }
 
 function weightsTableInit() {
     let title = document.getElementById('criteriaTitle');
     if (title)
-        title.innerHTML = locale.criteria;
+        title.innerHTML = locale.translate('criteria');
     let table = document.getElementById('weightsDataBody');
     if (table === undefined)
         return;
@@ -135,7 +135,7 @@ function weightsTableInit() {
 function variantsTableInit() {
     let title = document.getElementById('variantsTitle');
     if (title)
-        title.innerHTML = locale.variants;
+        title.innerHTML = locale.translate('variants');
     let table = document.getElementById('variantsDataBody');
     if (table === undefined)
         return;
@@ -287,7 +287,7 @@ function getVariantData(id) {
 function showResult() {
     let title = document.getElementById('marksTitle');
     if (title)
-        title.innerHTML = locale.marks;
+        title.innerHTML = locale.translate('marks');
     showTable('marksData');
     let table = document.getElementById('marksDataBody');
     if (table === undefined)
@@ -381,12 +381,12 @@ function sortTable(tableName, n) {
 
 //Some texts:
 
-document.getElementById('nameTitle').innerHTML = locale.menu.name;
-document.getElementById('descTitle').innerHTML = locale.menu.desc;
-document.getElementById('editName').innerHTML = locale.menu.name;
-document.getElementById('editWeights').innerHTML = locale.menu.weights;
-document.getElementById('editVariants').innerHTML = locale.menu.variants;
-document.getElementById('showResult').innerHTML = locale.menu.result;
+document.getElementById('nameTitle').innerHTML = locale.translate('menu', 'name');
+document.getElementById('descTitle').innerHTML = locale.translate('menu', 'desc');
+document.getElementById('editName').innerHTML = locale.translate('menu', 'name');
+document.getElementById('editWeights').innerHTML = locale.translate('menu', 'weights');
+document.getElementById('editVariants').innerHTML = locale.translate('menu', 'variants');
+document.getElementById('showResult').innerHTML = locale.translate('menu', 'result');
 
 //Some event listeners:
 

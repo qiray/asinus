@@ -23,7 +23,7 @@ const template = [
             {role: 'copy'},
             {role: 'paste'},
             {type: 'separator'},
-            {label: "Settings"},
+            {label: "Settings", click() {common.showSettingsWindow();}, accelerator: 'CmdOrCtrl+,'},
         ]
     },
     {

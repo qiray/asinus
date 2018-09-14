@@ -83,9 +83,14 @@ function clearData() {
     index.redrawAll();
 }
 
+function showSettingsWindow() {
+
+}
+
 module.exports.generate = generate;
 module.exports.clearData = clearData;
 module.exports.saveFile = saveFile;
 module.exports.loadFile = loadFile;
 module.exports.loadFileDialog = loadFileDialog;
 module.exports.saveFileDialog = saveFileDialog;
+module.exports.showSettingsWindow = showSettingsWindow;
