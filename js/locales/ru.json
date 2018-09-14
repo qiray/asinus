@@ -15,5 +15,17 @@
         "result" : "Результат",
         "settings" : "Настройки",
         "desc" : "Описание"
-    }
+    },
+    "language" : "Язык",
+    "save" : "Сохранить",
+    "languages" : [
+        {
+            "name" : "English",
+            "locale" : "en"
+        },
+        {
+            "name" : "Русский",
+            "locale" : "ru"
+        }
+    ]
 }

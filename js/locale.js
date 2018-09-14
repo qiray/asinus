@@ -1,15 +1,22 @@
-const path = require("path");
-const electron = require('electron');
-const fs = require('fs');
+
+let common = require("./common.js");
 
 class locale {
-    constructor(locale) {
+
+    constructor() {
+        const path = require("path");
+        const electron = require('electron');
+        const fs = require('fs');
         this.loadedLanguage = '';
         this.app = electron.app ? electron.app : electron.remote.app;
-        locale = locale ? locale : this.app.getLocale().substring(0,2);
-        if(fs.existsSync(path.join(__dirname, locale + '.js'))) {
+        let settings = common.loadSettings();
+        console.log(settings);
+        let locale = settings.locale;
+        console.log(locale);
+        let localePath = path.join(__dirname, 'locales', locale + '.json');
+        if (fs.existsSync(localePath)) {
             this.loadedLanguage = JSON.parse(
-                fs.readFileSync(path.join(__dirname, 'locales', locale + '.json'), 'utf8')
+                fs.readFileSync(localePath, 'utf8')
             );
         }
         else { //default language
@@ -26,15 +33,15 @@ class locale {
             for (let i = 1; i < arguments.length; i++) {
                 translation = translation[arguments[i]];
             }
-            if(translation === undefined) {
+            if (translation === undefined) {
                 translation = phrase;
             }
             return translation;
-        } catch(e) {
+        } catch (e) {
             return arguments[0] || "";
         }
-        
     }
+
 }
 
 module.exports = locale;

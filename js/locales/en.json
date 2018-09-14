@@ -16,5 +16,17 @@
         "result" : "Result",
         "settings" : "Settings",
         "desc" : "Description"
-    }
+    },
+    "language" : "Language",
+    "save" : "Save",
+    "languages" : [
+        {
+            "name" : "English",
+            "locale" : "en"
+        },
+        {
+            "name" : "Русский",
+            "locale" : "ru"
+        }
+    ]
 }

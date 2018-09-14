@@ -383,7 +383,7 @@ function sortTable(tableName, n) {
 
 document.getElementById('nameTitle').innerHTML = locale.translate('menu', 'name');
 document.getElementById('descTitle').innerHTML = locale.translate('menu', 'desc');
-document.getElementById('editName').innerHTML = locale.translate('menu', 'name');
+document.getElementById('editName').innerHTML = locale.translate('menu', 'desc');
 document.getElementById('editWeights').innerHTML = locale.translate('menu', 'weights');
 document.getElementById('editVariants').innerHTML = locale.translate('menu', 'variants');
 document.getElementById('showResult').innerHTML = locale.translate('menu', 'result');

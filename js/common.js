@@ -1,8 +1,8 @@
 
 let appData = require("./appdata.js");
-let index = require("./index.js");
 
 let ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let settingsFileName = "settings.json";
 
 let mainProcess = true;
 
@@ -32,6 +32,7 @@ function saveFileDialog () {
         function (fileName) {
             if (fileName === undefined)
                 return;
+            let index = require("./index.js");
             index.saveAll();
             let data = {};
             if (mainProcess)
@@ -66,6 +67,7 @@ function loadFileDialog() {
                 return;
             let data = loadFile(fileNames[0]);
             appData.buildFromJSON(JSON.parse(data));
+            let index = require("./index.js");
             index.redrawAll();
             // require('electron').remote.getGlobal('shared').appData = data;
         }
@@ -80,11 +82,42 @@ function loadFile (fileName) {
 
 function clearData() {
     appData.clear();
+    let index = require("./index.js");
     index.redrawAll();
 }
 
 function showSettingsWindow() {
+    let BrowserWindow = require('electron').remote.BrowserWindow;
+    let win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        minWidth: 800,
+        minHeight: 600,
+        icon: "assets/donkey.png"
+    });
+    win.loadFile('assets/settings.html');
+    // win.webContents.openDevTools();
+    win.setMenu(null);
+    win.on('closed', () => {
+        win = null; //delete window
+    });
+}
 
+function saveSettings(locale) {
+    saveFile(settingsFileName, JSON.stringify({
+        "locale" : locale
+    }));
+}
+
+function loadSettings() {
+    try {
+        return JSON.parse(loadFile(settingsFileName));
+    } catch (e) {
+        console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
+        return { //default settings
+            "locale" : "en"
+        };
+    }
 }
 
 module.exports.generate = generate;
@@ -94,3 +127,5 @@ module.exports.loadFile = loadFile;
 module.exports.loadFileDialog = loadFileDialog;
 module.exports.saveFileDialog = saveFileDialog;
 module.exports.showSettingsWindow = showSettingsWindow;
+module.exports.saveSettings = saveSettings;
+module.exports.loadSettings = loadSettings;
