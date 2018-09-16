@@ -1,4 +1,5 @@
 
+let common = require("./common.js");
 let Criterion = require("./criterion.js");
 let Variant = require("./variant.js");
 let locale = new (require("./locale.js"))();
@@ -9,20 +10,6 @@ const menuJS = require('./menu.js');
 const {Menu} = require('electron').remote;
 const menu = Menu.buildFromTemplate(menuJS.template);
 Menu.setApplicationMenu(menu);
-
-function showTable(id) {
-    let table = document.getElementById(id);
-    if (table === undefined)
-        return;
-    table.style.display = 'block';
-}
-
-function hideTable(id) {
-    let table = document.getElementById(id);
-    if (table === undefined)
-        return;
-    table.style.display = 'none';
-}
 
 function weightTabledeleteRow(index) {
     //delete row and criterion with id = index
@@ -288,7 +275,7 @@ function showResult() {
     let title = document.getElementById('marksTitle');
     if (title)
         title.innerHTML = locale.translate('marks');
-    showTable('marksData');
+    common.showTable('marksData');
     let table = document.getElementById('marksDataBody');
     if (table === undefined)
         return;
@@ -317,10 +304,10 @@ function redrawAll() {
     nameInit();
     weightsTableInit();
     variantsTableInit();
-    hideTable('weightsData');
-    hideTable('variantsData');
-    hideTable('marksData');
-    showTable('nameData');
+    common.hideTable('weightsData');
+    common.hideTable('variantsData');
+    common.hideTable('marksData');
+    common.showTable('nameData');
 }
 
 function sortTable(tableName, n) {
@@ -390,35 +377,35 @@ document.getElementById('showResult').innerHTML = locale.translate('menu', 'resu
 
 //Some event listeners:
 
-document.getElementById('editName').onmousedown = function() {
-    hideTable('variantsData');
-    hideTable('marksData');
-    hideTable('weightsData');
-    showTable('nameData');
+document.getElementById('editName').onclick = function() {
+    common.hideTable('variantsData');
+    common.hideTable('marksData');
+    common.hideTable('weightsData');
+    common.showTable('nameData');
 };
 
-document.getElementById('editWeights').onmousedown = function() {
-    hideTable('variantsData');
-    hideTable('marksData');
-    hideTable('nameData');
-    showTable('weightsData');
+document.getElementById('editWeights').onclick = function() {
+    common.hideTable('variantsData');
+    common.hideTable('marksData');
+    common.hideTable('nameData');
+    common.showTable('weightsData');
     saveAll();
     weightsTableInit();
 };
 
-document.getElementById('editVariants').onmousedown = function() {
-    hideTable('weightsData');
-    hideTable('marksData');
-    hideTable('nameData');
-    showTable('variantsData');
+document.getElementById('editVariants').onclick = function() {
+    common.hideTable('weightsData');
+    common.hideTable('marksData');
+    common.hideTable('nameData');
+    common.showTable('variantsData');
     saveAll();
     variantsTableInit();
 };
 
-document.getElementById('showResult').onmousedown = function() {
-    hideTable('weightsData');
-    hideTable('variantsData');
-    hideTable('nameData');
+document.getElementById('showResult').onclick = function() {
+    common.hideTable('weightsData');
+    common.hideTable('variantsData');
+    common.hideTable('nameData');
     saveAll();
     showResult();
 };

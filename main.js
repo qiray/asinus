@@ -37,10 +37,8 @@ app.on('ready', createWindow);
   
 //When all windows are closed
 app.on('window-all-closed', () => {
-    // hack for macOS - quit app when all windows are closed
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+    //quit app when all windows are closed
+    app.quit();
 });
   
 app.on('activate', () => {

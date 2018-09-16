@@ -120,6 +120,20 @@ function loadSettings() {
     }
 }
 
+function showTable(id) {
+    let table = document.getElementById(id);
+    if (table === undefined)
+        return;
+    table.style.display = 'block';
+}
+
+function hideTable(id) {
+    let table = document.getElementById(id);
+    if (table === undefined)
+        return;
+    table.style.display = 'none';
+}
+
 module.exports.generate = generate;
 module.exports.clearData = clearData;
 module.exports.saveFile = saveFile;
@@ -129,3 +143,5 @@ module.exports.saveFileDialog = saveFileDialog;
 module.exports.showSettingsWindow = showSettingsWindow;
 module.exports.saveSettings = saveSettings;
 module.exports.loadSettings = loadSettings;
+module.exports.showTable = showTable;
+module.exports.hideTable = hideTable;

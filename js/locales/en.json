@@ -19,6 +19,7 @@
     },
     "language" : "Language",
     "save" : "Save",
+    "close" : "Close",
     "languages" : [
         {
             "name" : "English",
