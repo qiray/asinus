@@ -5,6 +5,7 @@ let ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let settingsFileName = "settings.json";
 
 let mainProcess = true;
+let settingsWindow = null;
 
 if (global.shared === undefined) {
     mainProcess = false; //renderer process
@@ -88,18 +89,21 @@ function clearData() {
 
 function showSettingsWindow() {
     let BrowserWindow = require('electron').remote.BrowserWindow;
-    let win = new BrowserWindow({
+    if (settingsWindow) {
+        return;
+    }
+    settingsWindow = new BrowserWindow({
         width: 800,
         height: 600,
         minWidth: 800,
         minHeight: 600,
         icon: "assets/donkey.png"
     });
-    win.loadFile('assets/settings.html');
+    settingsWindow.loadFile('assets/settings.html');
     // win.webContents.openDevTools();
-    win.setMenu(null);
-    win.on('closed', () => {
-        win = null; //delete window
+    settingsWindow.setMenu(null);
+    settingsWindow.on('closed', () => {
+        settingsWindow = null; //delete window
     });
 }
 
