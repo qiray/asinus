@@ -16,6 +16,29 @@
         "settings" : "Настройки",
         "desc" : "Описание"
     },
+    "mainmenu" : {
+        "file" : "Файл",
+        "new" : "New",
+        "open" : "Open",
+        "save" : "Save",
+        "saveas" : "Save as",
+        "quit" : "Quit",
+
+        "edit" : "Правка",
+        "undo" : "Отменить",
+        "redo" : "Повторить",
+        "cut" : "Вырезать",
+        "copy" : "Копировать",
+        "paste" : "Вставить",
+        "settings" : "Настройки",
+
+        "window": "Окно",
+        "minimize": "Свернуть",
+        "close": "Закрыть",
+
+        "help": "Справка",
+        "about": "О программе"
+    },
     "language" : "Язык",
     "save" : "Сохранить",
     "close" : "Закрыть",

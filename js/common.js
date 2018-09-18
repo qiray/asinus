@@ -47,7 +47,7 @@ function saveFileDialog () {
 
 function saveFile (fileName, data) {
     let fs = require('fs');
-    fs.writeFile(fileName, data, function (err) {
+    fs.writeFileSync(fileName, data, function (err) {
         if (err) {
             console.log(err);
             console.log("Error saving file " + fileName);
@@ -97,10 +97,12 @@ function showSettingsWindow() {
         height: 600,
         minWidth: 800,
         minHeight: 600,
+        parent: require('electron').remote.getGlobal('shared').win, //get main window from global
+        modal: true,
         icon: "assets/donkey.png"
     });
     settingsWindow.loadFile('assets/settings.html');
-    // win.webContents.openDevTools();
+    settingsWindow.webContents.openDevTools();
     settingsWindow.setMenu(null);
     settingsWindow.on('closed', () => {
         settingsWindow = null; //delete window

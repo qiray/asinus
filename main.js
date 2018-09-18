@@ -15,10 +15,10 @@ function createWindow () {
         minHeight: 600,
         icon: "assets/donkey.png"
     });
-    global.shared = {appData : {}}; //create global object named 'shared'
+    global.shared = {appData : {}, win : win}; //create global object named 'shared'
   
     win.loadFile('index.html'); //load html app
-    // win.webContents.openDevTools();//enable devtools
+    win.webContents.openDevTools();//enable devtools
   
     //when windows is closed
     win.on('closed', () => {
@@ -29,6 +29,10 @@ function createWindow () {
     win.webContents.on('did-finish-load', () => {
         let package = require('./package.json');
         win.setTitle(package.name + " " + package.version);
+        const ipc = require('electron').ipcMain;
+        ipc.on('save_message', (event, message) => {
+            win.webContents.send('messageFromMain', message);
+        });
     });
 }
 

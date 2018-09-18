@@ -2,6 +2,8 @@
 let common = require("./common.js");
 let locale = new (require("./locale.js"))();
 
+let saved = false;
+
 function init() {
     document.title = locale.translate('menu', 'settings');
     document.getElementById('editLanguage').innerHTML = locale.translate('language');
@@ -12,10 +14,13 @@ function init() {
         select.remove(0);
     }
     let languages = locale.translate("languages");
-    for(let i in languages) { //TODO: select current setting!
+    let currentLocale = locale.getLocale();
+    for(let i in languages) {
         let option = document.createElement("option");
         option.text = languages[i].name;
         option.value = languages[i].locale;
+        if (option.value === currentLocale) 
+            option.selected = true;
         select.add(option);
     }
     document.getElementById('editLanguage').onclick = function() {
@@ -23,10 +28,14 @@ function init() {
     };
     document.getElementById('save').onclick = function() {
         let select = document.getElementById('langSelect');
-        console.log(select.options[select.selectedIndex]);
         common.saveSettings(select.options[select.selectedIndex].value);
+        saved = true;
     };
     document.getElementById('close').onclick = function() {
+        if (saved) {
+            const ipcRenderer = require('electron').ipcRenderer;
+            ipcRenderer.send('save_message', "saved");
+        }
         window.close();
     };
 }

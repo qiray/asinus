@@ -17,6 +17,29 @@
         "settings" : "Settings",
         "desc" : "Description"
     },
+    "mainmenu" : {
+        "file" : "File",
+        "new" : "New",
+        "open" : "Open",
+        "save" : "Save",
+        "saveas" : "Save as",
+        "quit" : "Quit",
+
+        "edit" : "Edit",
+        "undo" : "Undo",
+        "redo" : "Redo",
+        "cut" : "Cut",
+        "copy" : "Copy",
+        "paste" : "Paste",
+        "settings" : "Settings",
+
+        "window": "Window",
+        "minimize": "Minimize",
+        "close": "Close",
+
+        "help": "Help",
+        "about": "About"
+    },
     "language" : "Language",
     "save" : "Save",
     "close" : "Close",

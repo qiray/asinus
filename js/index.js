@@ -5,12 +5,6 @@ let Variant = require("./variant.js");
 let locale = new (require("./locale.js"))();
 let appData = require("./appdata.js"); //application data
 
-//Create menu:
-const menuJS = require('./menu.js');
-const {Menu} = require('electron').remote;
-const menu = Menu.buildFromTemplate(menuJS.template);
-Menu.setApplicationMenu(menu);
-
 function weightTabledeleteRow(index) {
     //delete row and criterion with id = index
     let obj = document.getElementById("weightTableRow" + index);
@@ -310,6 +304,21 @@ function redrawAll() {
     common.showTable('nameData');
 }
 
+function init() {
+    //set translations:
+    document.getElementById('nameTitle').innerHTML = locale.translate('menu', 'name');
+    document.getElementById('descTitle').innerHTML = locale.translate('menu', 'desc');
+    document.getElementById('editName').innerHTML = locale.translate('menu', 'desc');
+    document.getElementById('editWeights').innerHTML = locale.translate('menu', 'weights');
+    document.getElementById('editVariants').innerHTML = locale.translate('menu', 'variants');
+    document.getElementById('showResult').innerHTML = locale.translate('menu', 'result');
+    //Create menu:
+    const menuJS = require('./menu.js');
+    const {Menu} = require('electron').remote;
+    const menu = Menu.buildFromTemplate(menuJS.getTemplate());
+    Menu.setApplicationMenu(menu);
+}
+
 function sortTable(tableName, n) {
     //from https://www.w3schools.com/howto/howto_js_sort_table.asp
     let rows, i, x, y, shouldSwitch, switchcount = 0;
@@ -366,16 +375,16 @@ function sortTable(tableName, n) {
     }
 }
 
-//Some texts:
-
-document.getElementById('nameTitle').innerHTML = locale.translate('menu', 'name');
-document.getElementById('descTitle').innerHTML = locale.translate('menu', 'desc');
-document.getElementById('editName').innerHTML = locale.translate('menu', 'desc');
-document.getElementById('editWeights').innerHTML = locale.translate('menu', 'weights');
-document.getElementById('editVariants').innerHTML = locale.translate('menu', 'variants');
-document.getElementById('showResult').innerHTML = locale.translate('menu', 'result');
-
 //Some event listeners:
+
+const ipc = require('electron').ipcRenderer;
+ipc.on('messageFromMain', (event, message) => { //get messages from main process
+    if (message === 'saved') {
+        console.log(message);
+        locale = new (require("./locale.js"))();
+        init();
+    }
+});
 
 document.getElementById('editName').onclick = function() {
     common.hideTable('variantsData');
@@ -422,3 +431,4 @@ document.getElementById('variantsPlusButton').onclick = function() {
 
 module.exports.redrawAll = redrawAll;
 module.exports.saveAll = saveAll;
+module.exports.init = init;

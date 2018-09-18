@@ -10,10 +10,8 @@ class locale {
         this.loadedLanguage = '';
         this.app = electron.app ? electron.app : electron.remote.app;
         let settings = common.loadSettings();
-        console.log(settings);
-        let locale = settings.locale;
-        console.log(locale);
-        let localePath = path.join(__dirname, 'locales', locale + '.json');
+        this.locale = settings.locale;
+        let localePath = path.join(__dirname, 'locales', this.locale + '.json');
         if (fs.existsSync(localePath)) {
             this.loadedLanguage = JSON.parse(
                 fs.readFileSync(localePath, 'utf8')
@@ -40,6 +38,10 @@ class locale {
         } catch (e) {
             return arguments[0] || "";
         }
+    }
+
+    getLocale() {
+        return this.locale;
     }
 
 }
