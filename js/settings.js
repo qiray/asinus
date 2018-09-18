@@ -23,9 +23,6 @@ function init() {
             option.selected = true;
         select.add(option);
     }
-    document.getElementById('editLanguage').onclick = function() {
-        common.showTable('langData');
-    };
     document.getElementById('save').onclick = function() {
         let select = document.getElementById('langSelect');
         common.saveSettings(select.options[select.selectedIndex].value);

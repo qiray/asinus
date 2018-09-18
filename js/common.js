@@ -93,12 +93,13 @@ function showSettingsWindow() {
         return;
     }
     settingsWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        minWidth: 800,
-        minHeight: 600,
+        width: 400,
+        height: 300,
+        minWidth: 400,
+        minHeight: 300,
+        maxWidth: 400,
+        maxHeight: 300,
         parent: require('electron').remote.getGlobal('shared').win, //get main window from global
-        modal: true,
         icon: "assets/donkey.png"
     });
     settingsWindow.loadFile('assets/settings.html');

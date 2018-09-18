@@ -6,40 +6,17 @@
         <link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
     <body class="body">
-
-        <div class="divTable mainTable">
-                <div class="divTableBody">
-                    <div class="divTableRow">
-                        <div class="divTableCell leftCell">
-                            <table class="centerItem">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <button class="mainMenuButton button_blue" id="editLanguage"></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button class="mainMenuButton button_blue" id="save"></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button class="mainMenuButton button_blue" id="close"></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="divTableCell rightCell">
-                            <div class="centerItem fullHeight" style="display: none;" id="langData">
-                                <select size="1" id="langSelect">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div>
+            <h3 class="settingsHeader" id="editLanguage"></h3>
+            <div class="inline;">
+                <select size="1" id="langSelect">
+                </select>
             </div>
+        </div>
+        <div class="bottomButtons">
+            <button class="mainMenuButton button_blue bottomButton" id="save"></button>
+            <button class="mainMenuButton button_blue bottomButton" id="close"></button>
+        </div>
         <script>
             let js = require("../js/settings.js");
             js.init();

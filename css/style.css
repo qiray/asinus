@@ -114,7 +114,24 @@ div.coloredTable {
 .input:focus {
     border-bottom: 1px solid #000000;
 }
-
+.settingsHeader {
+    display: inline; 
+    margin-right: 5px; 
+    margin-left: 5px;
+}
+.inline {
+    display: inline;
+}
+.bottomButtons {
+    position: absolute; 
+    bottom: 1px;
+    right: 1px;
+}
+.bottomButton {
+    float:left;
+    width:100px;
+    height: 2em;
+}
 *:focus {
     outline: none;
 }
