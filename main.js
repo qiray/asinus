@@ -18,7 +18,7 @@ function createWindow () {
     global.shared = {appData : {}, win : win}; //create global object named 'shared'
   
     win.loadFile('index.html'); //load html app
-    win.webContents.openDevTools();//enable devtools
+    // win.webContents.openDevTools();//enable devtools
   
     //when windows is closed
     win.on('closed', () => {

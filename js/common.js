@@ -102,7 +102,7 @@ function showSettingsWindow() {
         icon: "assets/donkey.png"
     });
     settingsWindow.loadFile('assets/settings.html');
-    settingsWindow.webContents.openDevTools();
+    // settingsWindow.webContents.openDevTools();
     settingsWindow.setMenu(null);
     settingsWindow.on('closed', () => {
         settingsWindow = null; //delete window

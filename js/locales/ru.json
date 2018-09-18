@@ -18,11 +18,11 @@
     },
     "mainmenu" : {
         "file" : "Файл",
-        "new" : "New",
-        "open" : "Open",
-        "save" : "Save",
-        "saveas" : "Save as",
-        "quit" : "Quit",
+        "new" : "Создать",
+        "open" : "Открыть",
+        "save" : "Сохранить",
+        "saveas" : "Сохранить как",
+        "quit" : "Выход",
 
         "edit" : "Правка",
         "undo" : "Отменить",

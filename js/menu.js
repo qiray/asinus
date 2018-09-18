@@ -10,10 +10,10 @@ function getTemplate() {
             submenu: [
                 {label: locale.translate('mainmenu', 'new'), click() {common.clearData();}, accelerator: 'CmdOrCtrl+N'},
                 {label: locale.translate('mainmenu', 'open'), click() {common.loadFileDialog();}, accelerator: 'CmdOrCtrl+O'},
-                {label: locale.translate('mainmenu', 'save'), accelerator: 'CmdOrCtrl+S'},
+                {label: locale.translate('mainmenu', 'save'), accelerator: 'CmdOrCtrl+S'}, //TODO: add action
                 {label: locale.translate('mainmenu', 'saveas'), click() {common.saveFileDialog();}, accelerator: 'CmdOrCtrl+shift+S'},
                 {type: 'separator'},
-                {role: 'quit'}
+                {role: 'quit', label: locale.translate('mainmenu', 'quit')}
             ]
         },
         {
@@ -39,7 +39,7 @@ function getTemplate() {
         },
         {
             role: 'help',
-            label: locale.translate('mainmenu', 'help'),
+            label: locale.translate('mainmenu', 'help'), //TODO: add help
             submenu: [
                 {label: locale.translate('mainmenu', 'help')},
                 {label: locale.translate('mainmenu', 'about'), click() {
