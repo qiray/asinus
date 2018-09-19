@@ -111,6 +111,10 @@ function showSettingsWindow() {
 }
 
 function saveSettings(settings) {
+    if (mainProcess)
+        global.shared.settings = settings;
+    else
+        require('electron').remote.getGlobal('shared').settings = settings;
     saveFile(settingsFileName, JSON.stringify(settings));
 }
 
@@ -140,6 +144,16 @@ function hideTable(id) {
     table.style.display = 'none';
 }
 
+function updateBounds(settings) {
+    let bounds = mainProcess ? 
+        global.shared.win.getBounds() :
+        require('electron').remote.getGlobal('shared').win.getBounds();
+    settings.x = bounds.x;
+    settings.y = bounds.y;
+    settings.height = bounds.height;
+    settings.width = bounds.width;
+}
+
 module.exports.generate = generate;
 module.exports.clearData = clearData;
 module.exports.saveFile = saveFile;
@@ -151,3 +165,4 @@ module.exports.saveSettings = saveSettings;
 module.exports.loadSettings = loadSettings;
 module.exports.showTable = showTable;
 module.exports.hideTable = hideTable;
+module.exports.updateBounds = updateBounds;

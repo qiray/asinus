@@ -24,18 +24,16 @@ function init() {
             option.selected = true;
         select.add(option);
     }
+    let settings = common.loadSettings();
+    document.getElementById('coords').checked = settings.saveCoords;
     document.getElementById('save').onclick = function() {
         let select = document.getElementById('langSelect');
         let settings = {
             locale : select.options[select.selectedIndex].value
         };
         if (document.getElementById('coords').checked) {
-            let bounds = require('electron').remote.getGlobal('shared').win.getBounds();
             settings.saveCoords = true;
-            settings.x = bounds.x;
-            settings.y = bounds.y;
-            settings.height = bounds.height;
-            settings.width = bounds.width;
+            common.updateBounds(settings);
         }
         common.saveSettings(settings);
         saved = true;

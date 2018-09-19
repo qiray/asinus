@@ -5,42 +5,43 @@ const {app, Menu, BrowserWindow} = require('electron');
 //TODO: add save option, add popup on new/open to prevent losing data
 //TODO: add copyright
 //TODO: add tutorial and help
-//TODO: save windows size with position
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
 function createWindow () {
+    global.shared = {appData : {}}
     let common = require("./js/common.js");
     let settings = common.loadSettings();
-    if (settings.saveCoords) {
-        win = new BrowserWindow({
-            width: settings.width,
-            height: settings.height,
-            minWidth: 800,
-            minHeight: 600,
-            x: settings.x,
-            y: settings.y,
-            icon: "assets/donkey.png"
-        });
-    } else {
-        win = new BrowserWindow({
-            width: 800,
-            height: 600,
-            minWidth: 800,
-            minHeight: 600,
-            icon: "assets/donkey.png"
-        });
+    let windowParams = {
+        width: 800,
+        height: 600,
+        minWidth: 800,
+        minHeight: 600,
+        icon: "assets/donkey.png"
     }
-    global.shared = {appData : {}, win : win, settings : settings}; //create global object named 'shared'
+    if (settings.saveCoords) {
+        windowParams.width = settings.width;
+        windowParams.height = settings.height;
+        windowParams.x = settings.x;
+        windowParams.y = settings.y;
+    }
+    win = new BrowserWindow(windowParams);
+    //create global object named 'shared':
+    global.shared.win = win;
+    global.shared.settings = settings;
   
     win.loadFile('index.html'); //load html app
     // win.webContents.openDevTools();//enable devtools
 
+    //before windows is closed
+    win.on('close', function(e) {
+        common.updateBounds(global.shared.settings);
+        common.saveSettings(global.shared.settings);
+    });
     //when windows is closed
-    win.on('closed', () => {
-        // common.saveSettings(); //TODO: save settings
+    win.on('closed', function(e) {
         win = null; //delete window
     });
 
