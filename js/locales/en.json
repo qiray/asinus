@@ -41,6 +41,7 @@
         "about": "About"
     },
     "language" : "Language",
+    "saveCoords" : "Save window size and position",
     "save" : "Save",
     "close" : "Close",
     "languages" : [

@@ -7,6 +7,7 @@ let saved = false;
 function init() {
     document.title = locale.translate('menu', 'settings');
     document.getElementById('editLanguage').innerHTML = locale.translate('language');
+    document.getElementById('saveCoords').innerHTML = locale.translate('saveCoords');
     document.getElementById('save').innerHTML = locale.translate('save');
     document.getElementById('close').innerHTML = locale.translate('close');
     let select = document.getElementById('langSelect');
@@ -25,7 +26,18 @@ function init() {
     }
     document.getElementById('save').onclick = function() {
         let select = document.getElementById('langSelect');
-        common.saveSettings(select.options[select.selectedIndex].value);
+        let settings = {
+            locale : select.options[select.selectedIndex].value
+        };
+        if (document.getElementById('coords').checked) {
+            let bounds = require('electron').remote.getGlobal('shared').win.getBounds();
+            settings.saveCoords = true;
+            settings.x = bounds.x;
+            settings.y = bounds.y;
+            settings.height = bounds.height;
+            settings.width = bounds.width;
+        }
+        common.saveSettings(settings);
         saved = true;
     };
     document.getElementById('close').onclick = function() {

@@ -110,10 +110,8 @@ function showSettingsWindow() {
     });
 }
 
-function saveSettings(locale) {
-    saveFile(settingsFileName, JSON.stringify({
-        "locale" : locale
-    }));
+function saveSettings(settings) {
+    saveFile(settingsFileName, JSON.stringify(settings));
 }
 
 function loadSettings() {
@@ -122,7 +120,8 @@ function loadSettings() {
     } catch (e) {
         console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
         return { //default settings
-            "locale" : "en"
+            "locale" : "en",
+            "saveCoords" : false
         };
     }
 }

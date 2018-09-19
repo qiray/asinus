@@ -12,20 +12,35 @@ const {app, Menu, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
-    win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        minWidth: 800,
-        minHeight: 600,
-        icon: "assets/donkey.png"
-    });
-    global.shared = {appData : {}, win : win}; //create global object named 'shared'
+    let common = require("./js/common.js");
+    let settings = common.loadSettings();
+    if (settings.saveCoords) {
+        win = new BrowserWindow({
+            width: settings.width,
+            height: settings.height,
+            minWidth: 800,
+            minHeight: 600,
+            x: settings.x,
+            y: settings.y,
+            icon: "assets/donkey.png"
+        });
+    } else {
+        win = new BrowserWindow({
+            width: 800,
+            height: 600,
+            minWidth: 800,
+            minHeight: 600,
+            icon: "assets/donkey.png"
+        });
+    }
+    global.shared = {appData : {}, win : win, settings : settings}; //create global object named 'shared'
   
     win.loadFile('index.html'); //load html app
     // win.webContents.openDevTools();//enable devtools
-  
+
     //when windows is closed
     win.on('closed', () => {
+        // common.saveSettings(); //TODO: save settings
         win = null; //delete window
     });
 
