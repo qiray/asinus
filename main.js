@@ -11,7 +11,7 @@ const {app, dialog, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
-    global.shared = {appData : {}, currentFile : ""};
+    global.shared = {appData : {}, currentFile : "", dataChanged : false};
     let common = require("./js/common.js");
     let settings = common.loadSettings();
     let windowParams = {
@@ -33,18 +33,27 @@ function createWindow () {
     global.shared.settings = settings;
   
     win.loadFile('index.html'); //load html app
-    win.webContents.openDevTools();//enable devtools
+    // win.webContents.openDevTools();//enable devtools
+
+    const locale = new (require("./js/locale.js"))();
 
     //before windows is closed
     win.on('close', function(e) {
-        //TODO: dialog
-        // dialog.showMessageBox({
-        //     message: "Close button has been pressed!",
-        //     buttons: ["OK", "Exit"],
-        //     function (response) {
-        //         console.log(response);
-        //     }
-        // });
+        if (global.shared.dataChanged) {
+            e.preventDefault() // Prevents the window from closing 
+            dialog.showMessageBox({
+                type: 'question',
+                buttons: [locale.translate('popup', 'no'), locale.translate('popup', 'yes')],
+                title: locale.translate('popup', 'confirm'),
+                message: locale.translate('popup', 'unsaved_data_question')
+            }, function (response) {
+                if (response === 1) { // Runs the following if 'Yes' is clicked
+                    global.shared.dataChanged = false
+                    win.close()
+                }
+            })
+        }
+
         common.updateBounds(global.shared.settings);
         common.saveSettings(global.shared.settings);
     });

@@ -12,6 +12,7 @@ function weightTabledeleteRow(index) {
         return;
     obj.remove();
     appData.deleteCriterion(index);
+    common.setDataChangedValue(true);
 }
 
 function weightTableAddRow() {
@@ -26,6 +27,7 @@ function weightTableAddRow() {
     document.getElementById('deleteCriterionButton' + index).onclick = function() {
         weightTabledeleteRow(index);
     };
+    common.setDataChangedValue(true);
 }
 
 function tableNewColumn(type, columnClassName, params) {
@@ -160,6 +162,7 @@ function variantsTableAddRow(variant = undefined) {
     document.getElementById('deleteVariantButton' + index).onclick = function() {
         variantsTableDeleteRow(index);
     };
+    common.setDataChangedValue(true);
 }
 
 function numberFormat(value) {
@@ -201,12 +204,14 @@ function variantsTableDeleteRow(index) {
         return;
     obj.remove();
     appData.deleteVariant(index);
+    common.setDataChangedValue(true);
 }
 
 function saveAll() {
     saveCriteria();
     saveVariants();
     saveName();
+    common.setDataChangedValue(true);
     require('electron').remote.getGlobal('shared').appData = appData; //send appData to main process
 }
 
@@ -427,6 +432,13 @@ document.getElementById('variantsPlusButton').onclick = function() {
     variantsTableAddRow();
 };
 
+document.getElementById('nameInput').onchange = function() {
+    common.setDataChangedValue(true);
+}
+
+document.getElementById('descInput').onchange = function() {
+    common.setDataChangedValue(true);
+}
 //Export:
 
 module.exports.redrawAll = redrawAll;

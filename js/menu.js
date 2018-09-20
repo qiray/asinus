@@ -17,7 +17,8 @@ function getTemplate() {
                 {label: locale.translate('mainmenu', 'saveas'), 
                     click() {common.saveFileDialog();}, accelerator: 'CmdOrCtrl+shift+S'},
                 {type: 'separator'},
-                {role: 'quit', label: locale.translate('mainmenu', 'quit')}
+                {role: 'quit', label: locale.translate('mainmenu', 'quit'), 
+                    accelerator: 'CmdOrCtrl+Q'}
             ]
         },
         {

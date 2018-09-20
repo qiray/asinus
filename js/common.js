@@ -86,6 +86,7 @@ function loadFileDialog() {
                 require('electron').remote.getGlobal('shared').currentFile = fileNames[0];
                 let index = require("./index.js");
                 index.redrawAll();
+                setDataChangedValue(false);
             } catch(e) {
                 console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
             }
@@ -101,6 +102,7 @@ function loadFile(fileName) {
 }
 
 function clearData() {
+    setDataChangedValue(false);
     appData.clear();
     require('electron').remote.getGlobal('shared').currentFile = "";
     let index = require("./index.js");
@@ -174,6 +176,13 @@ function updateBounds(settings) {
     settings.width = bounds.width;
 }
 
+function setDataChangedValue(value) {
+    if (mainProcess)
+        global.shared.dataChanged = value;
+    else
+        require('electron').remote.getGlobal('shared').dataChanged = value;
+}
+
 module.exports.generate = generate;
 module.exports.clearData = clearData;
 module.exports.saveFile = saveFile;
@@ -187,3 +196,4 @@ module.exports.loadSettings = loadSettings;
 module.exports.showTable = showTable;
 module.exports.hideTable = hideTable;
 module.exports.updateBounds = updateBounds;
+module.exports.setDataChangedValue = setDataChangedValue;
