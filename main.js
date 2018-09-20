@@ -2,7 +2,7 @@
 const {app, Menu, BrowserWindow} = require('electron');
 
 //TODO: read https://github.com/crilleengvall/electron-tutorial-app
-//TODO: add save option, add popup on new/open to prevent losing data
+//TODO: add popup on new/open to prevent losing data
 //TODO: add copyright
 //TODO: add tutorial and help
 
@@ -11,7 +11,7 @@ const {app, Menu, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
-    global.shared = {appData : {}}
+    global.shared = {appData : {}, currentFile : ""};
     let common = require("./js/common.js");
     let settings = common.loadSettings();
     let windowParams = {
@@ -20,7 +20,7 @@ function createWindow () {
         minWidth: 800,
         minHeight: 600,
         icon: "assets/donkey.png"
-    }
+    };
     if (settings.saveCoords) {
         windowParams.width = settings.width;
         windowParams.height = settings.height;
@@ -33,7 +33,7 @@ function createWindow () {
     global.shared.settings = settings;
   
     win.loadFile('index.html'); //load html app
-    // win.webContents.openDevTools();//enable devtools
+    win.webContents.openDevTools();//enable devtools
 
     //before windows is closed
     win.on('close', function(e) {

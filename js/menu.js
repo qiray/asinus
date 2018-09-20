@@ -8,10 +8,14 @@ function getTemplate() {
         {
             label: locale.translate('mainmenu', 'file'),
             submenu: [
-                {label: locale.translate('mainmenu', 'new'), click() {common.clearData();}, accelerator: 'CmdOrCtrl+N'},
-                {label: locale.translate('mainmenu', 'open'), click() {common.loadFileDialog();}, accelerator: 'CmdOrCtrl+O'},
-                {label: locale.translate('mainmenu', 'save'), accelerator: 'CmdOrCtrl+S'}, //TODO: add action
-                {label: locale.translate('mainmenu', 'saveas'), click() {common.saveFileDialog();}, accelerator: 'CmdOrCtrl+shift+S'},
+                {label: locale.translate('mainmenu', 'new'), 
+                    click() {common.clearData();}, accelerator: 'CmdOrCtrl+N'},
+                {label: locale.translate('mainmenu', 'open'), 
+                    click() {common.loadFileDialog();}, accelerator: 'CmdOrCtrl+O'},
+                {label: locale.translate('mainmenu', 'save'),  
+                    click() {common.saveDataFile();}, accelerator: 'CmdOrCtrl+S'},
+                {label: locale.translate('mainmenu', 'saveas'), 
+                    click() {common.saveFileDialog();}, accelerator: 'CmdOrCtrl+shift+S'},
                 {type: 'separator'},
                 {role: 'quit', label: locale.translate('mainmenu', 'quit')}
             ]
@@ -26,7 +30,8 @@ function getTemplate() {
                 {role: 'copy', label: locale.translate('mainmenu', 'copy')},
                 {role: 'paste', label: locale.translate('mainmenu', 'paste')},
                 {type: 'separator'},
-                {label: locale.translate('mainmenu', 'settings'), click() {common.showSettingsWindow();}, accelerator: 'CmdOrCtrl+,'},
+                {label: locale.translate('mainmenu', 'settings'), 
+                    click() {common.showSettingsWindow();}, accelerator: 'CmdOrCtrl+,'},
             ]
         },
         {

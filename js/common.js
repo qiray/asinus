@@ -20,7 +20,7 @@ function generate(length) {
     return result;
 }
 
-function saveFileDialog () {
+function saveFileDialog() {
     let {dialog} = require('electron');
     if (!mainProcess)
         dialog = require('electron').remote.dialog;
@@ -33,19 +33,33 @@ function saveFileDialog () {
         function (fileName) {
             if (fileName === undefined)
                 return;
-            let index = require("./index.js");
-            index.saveAll();
-            let data = {};
-            if (mainProcess)
-                data = global.shared.appData; //get appData from global scope
-            else
-                data = require('electron').remote.getGlobal('shared').appData;
-            saveFile(fileName, JSON.stringify(data));
+            saveData(fileName);
         }
     ); 
 }
 
-function saveFile (fileName, data) {
+function saveDataFile() {
+    let currentFile = require('electron').remote.getGlobal('shared').currentFile;
+    if (currentFile === "") {
+        saveFileDialog();
+
+    } else {
+        saveData(currentFile);
+    }
+}
+
+function saveData(fileName) {
+    let index = require("./index.js");
+    index.saveAll();
+    let data = {};
+    if (mainProcess)
+        data = global.shared.appData; //get appData from global scope
+    else
+        data = require('electron').remote.getGlobal('shared').appData;
+    saveFile(fileName, JSON.stringify(data));
+}
+
+function saveFile(fileName, data) {
     let fs = require('fs');
     fs.writeFileSync(fileName, data, function (err) {
         if (err) {
@@ -66,16 +80,21 @@ function loadFileDialog() {
         function (fileNames) {
             if (fileNames === undefined)
                 return;
-            let data = loadFile(fileNames[0]);
-            appData.buildFromJSON(JSON.parse(data));
-            let index = require("./index.js");
-            index.redrawAll();
+            try {
+                let data = loadFile(fileNames[0]);
+                appData.buildFromJSON(JSON.parse(data));
+                require('electron').remote.getGlobal('shared').currentFile = fileNames[0];
+                let index = require("./index.js");
+                index.redrawAll();
+            } catch(e) {
+                console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
+            }
             // require('electron').remote.getGlobal('shared').appData = data;
         }
     );
 }
 
-function loadFile (fileName) {
+function loadFile(fileName) {
     let fs = require('fs');
     var data = fs.readFileSync(fileName, 'utf8');
     return data;
@@ -83,6 +102,7 @@ function loadFile (fileName) {
 
 function clearData() {
     appData.clear();
+    require('electron').remote.getGlobal('shared').currentFile = "";
     let index = require("./index.js");
     index.redrawAll();
 }
@@ -157,6 +177,7 @@ function updateBounds(settings) {
 module.exports.generate = generate;
 module.exports.clearData = clearData;
 module.exports.saveFile = saveFile;
+module.exports.saveDataFile = saveDataFile;
 module.exports.loadFile = loadFile;
 module.exports.loadFileDialog = loadFileDialog;
 module.exports.saveFileDialog = saveFileDialog;
