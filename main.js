@@ -1,5 +1,5 @@
 
-const {app, Menu, BrowserWindow} = require('electron');
+const {app, dialog, BrowserWindow} = require('electron');
 
 //TODO: read https://github.com/crilleengvall/electron-tutorial-app
 //TODO: add popup on new/open to prevent losing data
@@ -37,6 +37,14 @@ function createWindow () {
 
     //before windows is closed
     win.on('close', function(e) {
+        //TODO: dialog
+        // dialog.showMessageBox({
+        //     message: "Close button has been pressed!",
+        //     buttons: ["OK", "Exit"],
+        //     function (response) {
+        //         console.log(response);
+        //     }
+        // });
         common.updateBounds(global.shared.settings);
         common.saveSettings(global.shared.settings);
     });
