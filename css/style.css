@@ -132,6 +132,9 @@ div.coloredTable {
     width:100px;
     height: 2em;
 }
+.center {
+    text-align: center;
+}
 *:focus {
     outline: none;
 }

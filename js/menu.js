@@ -45,17 +45,11 @@ function getTemplate() {
         },
         {
             role: 'help',
-            label: locale.translate('mainmenu', 'help'), //TODO: add help
+            label: locale.translate('mainmenu', 'help'),
             submenu: [
-                {label: locale.translate('mainmenu', 'help')},
+                {label: locale.translate('mainmenu', 'help')}, //TODO: add help
                 {label: locale.translate('mainmenu', 'about'), click() {
-                    //TODO: style this info
-                    const dialog = require('electron').remote.dialog;
-                    dialog.showMessageBox({
-                        title: locale.translate('mainmenu', 'about'),
-                        buttons: ["OK"],
-                        message: getAboutInfo()
-                    });
+                    common.showAboutInfo();
                 }}
           ]
         }
@@ -79,14 +73,6 @@ function getTemplate() {
         });
     }
     return template;
-}
-
-function getAboutInfo() {
-    let package = require('../package.json');
-    return package.name + " " + package.version + "\n" +
-        "Runs with Node.js " + process.versions.node + ", Chrome " + 
-        process.versions.chrome + ", Electron " + process.versions.electron + ".\n" +
-        "App icon made by <a href=\"http://www.freepik.com\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div>";
 }
 
 module.exports.getTemplate = getTemplate; //export template for usage in other modules

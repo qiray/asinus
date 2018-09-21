@@ -6,6 +6,7 @@ let settingsFileName = "settings.json";
 
 let mainProcess = true;
 let settingsWindow = null;
+let aboutWindow = null;
 
 if (global.shared === undefined) {
     mainProcess = false; //renderer process
@@ -224,6 +225,29 @@ function getDataChangedValue() {
         return require('electron').remote.getGlobal('shared').dataChanged;
 }
 
+function showAboutInfo() {
+    let BrowserWindow = require('electron').remote.BrowserWindow;
+    if (aboutWindow) {
+        return;
+    }
+    aboutWindow = new BrowserWindow({
+        width: 450,
+        height: 300,
+        minWidth: 450,
+        minHeight: 300,
+        maxWidth: 450,
+        maxHeight: 300,
+        parent: require('electron').remote.getGlobal('shared').win,
+        icon: "assets/donkey.png"
+    });
+    aboutWindow.loadFile('assets/about.html');
+    // aboutWindow.webContents.openDevTools();
+    aboutWindow.setMenu(null);
+    aboutWindow.on('closed', () => {
+        aboutWindow = null; //delete window
+    });
+}
+
 module.exports.generate = generate;
 module.exports.clearDataRequest = clearDataRequest;
 module.exports.saveFile = saveFile;
@@ -238,3 +262,4 @@ module.exports.showTable = showTable;
 module.exports.hideTable = hideTable;
 module.exports.updateBounds = updateBounds;
 module.exports.setDataChangedValue = setDataChangedValue;
+module.exports.showAboutInfo = showAboutInfo;

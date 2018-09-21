@@ -2,13 +2,31 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title>""</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
     <body class="body">
-
+        <div>
+            <h3 class="center" id="appName"></h3>
+            <div id="aboutApp"></div>
+            <div id="version"></div>
+            <div id="copyright"></div>
+            <div id="license"></div>
+            <div id="nodejs"></div>
+            <div id="chrome"></div>
+            <div id="electron"></div>fdgdfg
+        </div>
+        <div id = "resources">
+            <span id="iconMadeBy"></span> <a href="http://www.freepik.com" title="Freepik">Freepik</a>
+            <span id="from"></span> <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
+            <span id="iconLicensed"></span> <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC 3.0 BY</a>
+        </div>
+        <div class="bottomButtons">
+            <button class="mainMenuButton button_blue bottomButton" id="close"></button>
+        </div>
         <script>
-            let index = require("./js/common.js");
+            let index = require("../js/about.js");
+            index.init();
         </script>
     </body>
 </html>
