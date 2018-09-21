@@ -434,11 +434,11 @@ document.getElementById('variantsPlusButton').onclick = function() {
 
 document.getElementById('nameInput').onchange = function() {
     common.setDataChangedValue(true);
-}
+};
 
 document.getElementById('descInput').onchange = function() {
     common.setDataChangedValue(true);
-}
+};
 //Export:
 
 module.exports.redrawAll = redrawAll;

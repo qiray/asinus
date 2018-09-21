@@ -2,7 +2,6 @@
 const {app, dialog, BrowserWindow} = require('electron');
 
 //TODO: read https://github.com/crilleengvall/electron-tutorial-app
-//TODO: add popup on new/open to prevent losing data
 //TODO: add copyright
 //TODO: add tutorial and help
 
@@ -11,6 +10,7 @@ const {app, dialog, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
+    //create global object named 'shared':
     global.shared = {appData : {}, currentFile : "", dataChanged : false};
     let common = require("./js/common.js");
     let settings = common.loadSettings();
@@ -27,20 +27,18 @@ function createWindow () {
         windowParams.x = settings.x;
         windowParams.y = settings.y;
     }
+
     win = new BrowserWindow(windowParams);
-    //create global object named 'shared':
     global.shared.win = win;
     global.shared.settings = settings;
-  
     win.loadFile('index.html'); //load html app
     // win.webContents.openDevTools();//enable devtools
-
     const locale = new (require("./js/locale.js"))();
 
     //before windows is closed
     win.on('close', function(e) {
         if (global.shared.dataChanged) {
-            e.preventDefault() // Prevents the window from closing 
+            e.preventDefault(); // Prevents the window from closing 
             dialog.showMessageBox({
                 type: 'question',
                 buttons: [locale.translate('popup', 'no'), locale.translate('popup', 'yes')],
@@ -48,15 +46,16 @@ function createWindow () {
                 message: locale.translate('popup', 'unsaved_data_question')
             }, function (response) {
                 if (response === 1) { // Runs the following if 'Yes' is clicked
-                    global.shared.dataChanged = false
-                    win.close()
+                    global.shared.dataChanged = false;
+                    win.close();
                 }
-            })
+            });
         }
 
         common.updateBounds(global.shared.settings);
         common.saveSettings(global.shared.settings);
     });
+
     //when windows is closed
     win.on('closed', function(e) {
         win = null; //delete window

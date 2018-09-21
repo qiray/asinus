@@ -70,6 +70,10 @@ function saveFile(fileName, data) {
 }
 
 function loadFileDialog() {
+    if (getDataChangedValue()) {
+        clearDataDialog(loadFileDialog);
+        return;
+    }
     const dialog = require('electron').remote.dialog;
     dialog.showOpenDialog(
         { 
@@ -99,6 +103,36 @@ function loadFile(fileName) {
     let fs = require('fs');
     var data = fs.readFileSync(fileName, 'utf8');
     return data;
+}
+
+function clearDataDialog(callback) {
+    let {dialog} = require('electron');
+    if (!mainProcess)
+        dialog = require('electron').remote.dialog;
+    const locale = new (require("./locale.js"))();
+    dialog.showMessageBox({
+        type: 'question',
+        buttons: [locale.translate('popup', 'no'), locale.translate('popup', 'yes')],
+        title: locale.translate('popup', 'confirm'),
+        message: locale.translate('popup', 'unsaved_data_question')
+    }, function (response) {
+        if (response === 1) {
+            if (callback) {
+                setDataChangedValue(false);
+                callback();
+            } else {
+                clearData();
+            }
+        }
+    });
+}
+
+function clearDataRequest() {
+    if (getDataChangedValue()) {
+        clearDataDialog();
+    } else {
+        clearData();
+    }
 }
 
 function clearData() {
@@ -183,8 +217,15 @@ function setDataChangedValue(value) {
         require('electron').remote.getGlobal('shared').dataChanged = value;
 }
 
+function getDataChangedValue() {
+    if (mainProcess)
+        return global.shared.dataChanged;
+    else
+        return require('electron').remote.getGlobal('shared').dataChanged;
+}
+
 module.exports.generate = generate;
-module.exports.clearData = clearData;
+module.exports.clearDataRequest = clearDataRequest;
 module.exports.saveFile = saveFile;
 module.exports.saveDataFile = saveDataFile;
 module.exports.loadFile = loadFile;

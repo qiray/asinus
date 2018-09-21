@@ -9,7 +9,7 @@ function getTemplate() {
             label: locale.translate('mainmenu', 'file'),
             submenu: [
                 {label: locale.translate('mainmenu', 'new'), 
-                    click() {common.clearData();}, accelerator: 'CmdOrCtrl+N'},
+                    click() {common.clearDataRequest();}, accelerator: 'CmdOrCtrl+N'},
                 {label: locale.translate('mainmenu', 'open'), 
                     click() {common.loadFileDialog();}, accelerator: 'CmdOrCtrl+O'},
                 {label: locale.translate('mainmenu', 'save'),  

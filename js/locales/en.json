@@ -41,7 +41,7 @@
         "about": "About"
     },
     "popup" : {
-        "unsaved_data_question" : "Unsaved data will be lost. Are you sure you want to quit?",
+        "unsaved_data_question" : "Unsaved data will be lost. Are you sure?",
         "confirm" : "Confirm",
         "yes" : "Yes",
         "no" : "No"
