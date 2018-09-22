@@ -7,6 +7,7 @@ let settingsFileName = "settings.json";
 let mainProcess = true;
 let settingsWindow = null;
 let aboutWindow = null;
+let licenseWindow = null;
 
 if (global.shared === undefined) {
     mainProcess = false; //renderer process
@@ -167,6 +168,27 @@ function showSettingsWindow() {
     });
 }
 
+function showLicenseWindow() {
+    let BrowserWindow = require('electron').remote.BrowserWindow;
+    if (licenseWindow) {
+        return;
+    }
+    licenseWindow = new BrowserWindow({
+        width: 650,
+        height: 540,
+        minWidth: 650,
+        minHeight: 540,
+        parent: require('electron').remote.getGlobal('shared').win,
+        icon: "assets/donkey.png"
+    });
+    licenseWindow.loadFile('assets/license.html');
+    // licenseWindow.webContents.openDevTools();
+    licenseWindow.setMenu(null);
+    licenseWindow.on('closed', () => {
+        licenseWindow = null;
+    });
+}
+
 function saveSettings(settings) {
     if (mainProcess)
         global.shared.settings = settings;
@@ -263,3 +285,4 @@ module.exports.hideTable = hideTable;
 module.exports.updateBounds = updateBounds;
 module.exports.setDataChangedValue = setDataChangedValue;
 module.exports.showAboutInfo = showAboutInfo;
+module.exports.showLicenseWindow = showLicenseWindow;

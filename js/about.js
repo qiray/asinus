@@ -1,4 +1,6 @@
 
+let shell = require('electron').remote.shell;
+let common = require("./common.js");
 let locale = new (require("./locale.js"))();
 
 function init() {
@@ -9,7 +11,8 @@ function init() {
         package.version;
     document.getElementById('aboutApp').innerHTML = locale.translate('about');
     document.getElementById('copyright').innerHTML = locale.translate('copyright');
-    document.getElementById('license').innerHTML = locale.translate('license');
+    document.getElementById('license').innerHTML = locale.translate('license') + 
+        "<a href=\"LICENSE\">" + locale.translate('freesoftware') + "</a>";
     document.getElementById('nodejs').innerHTML = locale.translate('nodejs') + 
         process.versions.node;
     document.getElementById('chrome').innerHTML = locale.translate('chrome') + 
@@ -21,6 +24,10 @@ function init() {
     document.getElementById('from').innerHTML = locale.translate("from");
     document.getElementById('iconLicensed').innerHTML = locale.translate("iconLicensed");
 
+    document.getElementById('license').onclick = function() {
+        common.showLicenseWindow();
+        // shell.openItem("LICENSE");
+    };
     document.getElementById('close').onclick = function() {
         window.close();
     };
@@ -35,7 +42,8 @@ function init() {
 }
 
 function openExternal(link) {
-    let shell = require('electron').remote.shell;
+    if (link.search("LICENSE") >= 0)
+        return;
     shell.openExternal(link);
 }
 

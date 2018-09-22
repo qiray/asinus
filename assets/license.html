@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>""</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+    </head>
+    <body class="body">
+        <pre id="content">
+        </pre>
+        <script>
+            let index = require("../js/common.js");
+            let locale = new (require("../js/locale.js"))();
+            let path = require("path");
+            document.getElementById('content').innerHTML = index.loadFile(path.resolve("./LICENSE"));
+            document.title = locale.translate("license");
+        </script>
+    </body>
+</html>
