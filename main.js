@@ -5,6 +5,7 @@ const {app, dialog, BrowserWindow} = require('electron');
 //TODO: add tutorial and help
 //TODO: translated license
 //TODO: Readme
+//TODO: add full path to require, maybe move some files to folders 
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

@@ -108,11 +108,15 @@ function weightsTableInit() {
     for (let i in ids) {
         table.appendChild(newWeightTableRowElements(ids[i], appData.getCriterion(ids[i])));
         let index = ids[i];
-        document.getElementById('deleteCriterionButton' + index).onclick = (
-            function(index) {return function() {
-            weightTabledeleteRow(index);
-        };})(index);
+        document.getElementById('deleteCriterionButton' + index).onclick = 
+            weightTabledeleteRowCallback(index);
     }
+}
+
+function weightTabledeleteRowCallback(index) {
+    return function() {
+        weightTabledeleteRow(index);
+    };
 }
 
 function variantsTableInit() {

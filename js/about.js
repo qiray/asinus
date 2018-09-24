@@ -34,11 +34,15 @@ function init() {
     let aTags = document.getElementsByTagName("a");
     for (let i = 0; i < aTags.length; i++) {
         let url = aTags[i].href;
-        aTags[i].onclick = function() {
-            openExternal(url);
-        };
+        aTags[i].onclick = openExternalCallback(url);
         aTags[i].href = "#";
     }
+}
+
+function openExternalCallback(link) {
+    return function() {
+        openExternal(link);
+    };
 }
 
 function openExternal(link) {
