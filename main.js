@@ -4,6 +4,7 @@ const {app, dialog, BrowserWindow} = require('electron');
 //TODO: read https://github.com/crilleengvall/electron-tutorial-app
 //TODO: add tutorial, examples and help
 //TODO: Readme
+//TODO: resize table or add tooltips for values
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
