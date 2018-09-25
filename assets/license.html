@@ -8,12 +8,31 @@
     <body class="body">
         <pre id="content">
         </pre>
+        <div>
+            <a id="realLicense" href="#"></a>
+        </div>
         <script>
             let index = require("../js/common.js");
             let locale = new (require("../js/locale.js"))();
+            let currentLocale = locale.getLocale();
+            let isEnglish = currentLocale === 'en';
+            let postfix = isEnglish ? '' : ('_' + currentLocale);
             let path = require("path");
-            document.getElementById('content').innerHTML = index.loadFile(path.resolve("./LICENSE"));
+            document.getElementById('content').innerHTML = 
+                index.loadFile(path.resolve("./LICENSE" + postfix));
             document.title = locale.translate("license");
+            let obj = document.getElementById('realLicense');
+            if (!isEnglish) {
+                obj.innerHTML = locale.translate("realLicense");
+                obj.onclick = function() {
+                    document.getElementById('content').innerHTML =
+                        index.loadFile(path.resolve("./LICENSE"));
+                    obj.style.display = "none";
+                    return false;
+                }
+            } else {
+                obj.style.display = "none";
+            }
         </script>
     </body>
 </html>

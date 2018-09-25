@@ -6,6 +6,7 @@
     "copyright" : "Copyright (C) 2018 Yaroslav Zotov",
     "license" : "License: ",
     "freesoftware" : "this is a free software released under The 3-Clause BSD License",
+    "realLicense" : "",
     "nodejs" : "Node.js: ",
     "chrome" : "Chrome: ",
     "electron" : "Electron: ",
