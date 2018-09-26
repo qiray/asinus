@@ -261,13 +261,14 @@ function showAboutInfo() {
     if (aboutWindow) {
         return;
     }
+    let width = 450, height = 340;
     aboutWindow = new BrowserWindow({
-        width: 450,
-        height: 300,
-        minWidth: 450,
-        minHeight: 300,
-        maxWidth: 450,
-        maxHeight: 300,
+        width: width,
+        height: height,
+        minWidth: width,
+        minHeight: height,
+        maxWidth: width,
+        maxHeight: height,
         parent: require('electron').remote.getGlobal('shared').win,
         icon: "assets/donkey.png"
     });

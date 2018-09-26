@@ -59,18 +59,21 @@ function getTemplate() {
       
     if (process.platform === 'darwin') {
         const app = require('electron').remote.app;
+        let appName = app.getName();
         template.unshift({
-            label: app.getName(),
+            label: appName,
             submenu: [
-                {role: 'about'},
+                {label: locale.translate('mainmenu', 'about') + ' ' + appName, click() {
+                    common.showAboutInfo();
+                }},
                 {type: 'separator'},
-                {role: 'services', submenu: []},
+                {role: 'services', submenu: [], label: locale.translate('mainmenu', 'services')},
                 {type: 'separator'},
-                {role: 'hide'},
-                {role: 'hideothers'},
-                {role: 'unhide'},
+                {role: 'hide', label: locale.translate('mainmenu', 'hide') + ' ' + appName},
+                {role: 'hideothers', label: locale.translate('mainmenu', 'hideothers')},
+                {role: 'unhide', label: locale.translate('mainmenu', 'unhide')},
                 {type: 'separator'},
-                {role: 'quit'}
+                {role: 'quit', label: locale.translate('mainmenu', 'quit')}
             ]
         });
     }

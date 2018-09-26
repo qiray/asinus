@@ -1,6 +1,7 @@
 
 {
     "asinus" : "Asinus",
+    "fromLatin" : "from Latin \"Asinus Buridani\" - Buridan's ass.",
     "about" : "Application for making rational decision.",
     "version" : "Version: ",
     "copyright" : "Copyright (C) 2018 Yaroslav Zotov",
@@ -51,7 +52,12 @@
         "close": "Close",
 
         "help": "Help",
-        "about": "About"
+        "about": "About",
+
+        "services": "Services",
+        "hide": "Hide",
+        "hideothers": "Hide others",
+        "unhide": "Show all"
     },
     "popup" : {
         "unsaved_data_question" : "Unsaved data will be lost. Are you sure?",

@@ -9,7 +9,8 @@ function init() {
     document.getElementById('appName').innerHTML = locale.translate('asinus');
     document.getElementById('version').innerHTML = locale.translate('version') + 
         package.version;
-    document.getElementById('aboutApp').innerHTML = locale.translate('about');
+    document.getElementById('aboutApp').innerHTML = locale.translate('fromLatin') +
+        "<br>" + locale.translate('about');
     document.getElementById('copyright').innerHTML = locale.translate('copyright');
     document.getElementById('license').innerHTML = locale.translate('license') + 
         "<a href=\"LICENSE\">" + locale.translate('freesoftware') + "</a>";
