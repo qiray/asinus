@@ -47,7 +47,9 @@ function getTemplate() {
             role: 'help',
             label: locale.translate('mainmenu', 'help'),
             submenu: [
-                {label: locale.translate('mainmenu', 'help')}, //TODO: add help
+                {label: locale.translate('mainmenu', 'help'), click() {
+                    common.showHelp();
+                }},
                 {label: locale.translate('mainmenu', 'about'), click() {
                     common.showAboutInfo();
                 }}

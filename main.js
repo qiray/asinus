@@ -2,7 +2,7 @@
 const {app, dialog, BrowserWindow} = require('electron');
 
 //TODO: read https://github.com/crilleengvall/electron-tutorial-app
-//TODO: add tutorial, examples and help
+//TODO: add interactive tutorial
 //TODO: Readme
 //TODO: resize table or add tooltips for values
 
