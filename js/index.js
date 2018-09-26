@@ -71,8 +71,8 @@ function variantsTableHeader(marks = false) {
         result.appendChild(headerElement(appData.getCriterion(ids[i]).name,
             marks ? Number(i) + 1 : null, "marksDataBody"));
     }
-    result.appendChild(headerElement(marks ? locale.translate('total') : locale.translate('deleteHeader'),
-        marks ? ids.length : null, "marksDataBody"));
+    result.appendChild(headerElement(marks ? locale.translate('total') : 
+        locale.translate('deleteHeader'), marks ? ids.length + 1 : null, "marksDataBody"));
     return result;
 }
 
@@ -194,7 +194,8 @@ function marksTableAddRow(variant, data) {
     for (let i in ids) {
         sum += data[ids[i]];
         result.appendChild(tableNewColumn('div', 'divTableCell', 
-            {id : "weight" + index + "criterion" + ids[i], innerHTML : numberFormat(data[ids[i]])}));
+            {id : "weight" + index + "criterion" + ids[i], 
+            innerHTML : numberFormat(data[ids[i]])}));
     }
     result.appendChild(tableNewColumn('div', 'divTableCell', 
         {id : "weightsSum" + index, innerHTML : numberFormat(sum)}));
@@ -216,7 +217,8 @@ function saveAll() {
     saveVariants();
     saveName();
     common.setDataChangedValue(true);
-    require('electron').remote.getGlobal('shared').appData = appData; //send appData to main process
+     //send appData to main process:
+    require('electron').remote.getGlobal('shared').appData = appData;
 }
 
 function saveCriteria() {
@@ -352,14 +354,16 @@ function sortTable(tableName, n) {
             y = rows[i + 1].childNodes[n];
             /*check if the two rows should switch place,
             based on the direction, asc or desc:*/
+            let xValue = x.firstChild.innerHTML.toLowerCase();
+            let yValue = y.firstChild.innerHTML.toLowerCase();
             if (dir == "asc") {
-                if (x.firstChild.innerHTML.toLowerCase() > y.firstChild.innerHTML.toLowerCase()) {
+                if (xValue > yValue) {
                     //if so, mark as a switch and break the loop:
                     shouldSwitch = true;
                     break;
                 }
             } else if (dir == "desc") {
-                if (x.firstChild.innerHTML.toLowerCase() < y.firstChild.innerHTML.toLowerCase()) {
+                if (xValue < yValue) {
                     //if so, mark as a switch and break the loop:
                     shouldSwitch = true;
                     break;

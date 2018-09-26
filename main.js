@@ -22,11 +22,9 @@ function createWindow () {
         minHeight: 600,
         icon: "assets/donkey.png"
     };
-    if (settings.saveCoords) {
+    if (settings.saveSize) {
         windowParams.width = settings.width;
         windowParams.height = settings.height;
-        windowParams.x = settings.x;
-        windowParams.y = settings.y;
     }
 
     win = new BrowserWindow(windowParams);

@@ -212,7 +212,7 @@ function loadSettings() {
         console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
         return { //default settings
             "locale" : "en",
-            "saveCoords" : false
+            "saveSize" : false
         };
     }
 }

@@ -60,7 +60,7 @@
         "no" : "No"
     },
     "language" : "Language",
-    "saveCoords" : "Save window size and position",
+    "saveSize" : "Save window size",
     "save" : "Save",
     "close" : "Close",
     "languages" : [

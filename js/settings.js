@@ -7,7 +7,7 @@ let saved = false;
 function init() {
     document.title = locale.translate('menu', 'settings');
     document.getElementById('editLanguage').innerHTML = locale.translate('language');
-    document.getElementById('saveCoords').innerHTML = locale.translate('saveCoords');
+    document.getElementById('saveSize').innerHTML = locale.translate('saveSize');
     document.getElementById('save').innerHTML = locale.translate('save');
     document.getElementById('close').innerHTML = locale.translate('close');
     let select = document.getElementById('langSelect');
@@ -25,14 +25,14 @@ function init() {
         select.add(option);
     }
     let settings = common.loadSettings();
-    document.getElementById('coords').checked = settings.saveCoords;
+    document.getElementById('coords').checked = settings.saveSize;
     document.getElementById('save').onclick = function() {
         let select = document.getElementById('langSelect');
         let settings = {
             locale : select.options[select.selectedIndex].value
         };
         if (document.getElementById('coords').checked) {
-            settings.saveCoords = true;
+            settings.saveSize = true;
             common.updateBounds(settings);
         }
         common.saveSettings(settings);
