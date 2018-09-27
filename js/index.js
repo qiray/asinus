@@ -5,7 +5,7 @@ let Variant = require("./variant.js");
 let locale = new (require("./locale.js"))();
 let appData = require("./appdata.js"); //application data
 
-function weightTabledeleteRow(index) {
+function weightTableDeleteRow(index) {
     //delete row and criterion with id = index
     let obj = document.getElementById("weightTableRow" + index);
     if (obj === undefined)
@@ -25,9 +25,8 @@ function weightTableAddRow() {
     appData.addCriterion(criterion);
     table.appendChild(newWeightTableRowElements(index));
     document.getElementById('deleteCriterionButton' + index).onclick = function() {
-        weightTabledeleteRow(index);
+        weightTableDeleteRow(index);
     };
-    common.setDataChangedValue(true);
 }
 
 function tableNewColumn(type, columnClassName, params) {
@@ -49,9 +48,11 @@ function newWeightTableRowElements(index, obj) {
     container.id = "weightTableRow" + index;
     container.appendChild(tableNewColumn('input', 'divTableCell', 
         {className : 'input tableInput', type : 'text', id : 'criterionName' + index,
+        onclick : function() {common.setDataChangedValue(true);},
         value : obj ? obj.getName() : ''}));
     container.appendChild(tableNewColumn('input', 'divTableCell', 
         {className : 'input tableInput', type : 'number', min : '0', step : '0.01', 
+        onclick : function() {common.setDataChangedValue(true);},
         id : 'criterionValue' + index, value : obj ? obj.getWeight() : '0'}));
     container.appendChild(tableNewColumn('input', 'divTableCellSmall', 
         {type : 'checkbox', id : 'criterionInverted' + index,
@@ -109,13 +110,13 @@ function weightsTableInit() {
         table.appendChild(newWeightTableRowElements(ids[i], appData.getCriterion(ids[i])));
         let index = ids[i];
         document.getElementById('deleteCriterionButton' + index).onclick = 
-            weightTabledeleteRowCallback(index);
+            weightTableDeleteRowCallback(index);
     }
 }
 
-function weightTabledeleteRowCallback(index) {
+function weightTableDeleteRowCallback(index) {
     return function() {
-        weightTabledeleteRow(index);
+        weightTableDeleteRow(index);
     };
 }
 
@@ -153,11 +154,13 @@ function variantsTableAddRow(variant = undefined) {
     result.id = "variantRow" + index;
     result.appendChild(tableNewColumn('input', 'divTableCell',
         {className : 'input tableInput', type : 'text', 
-        id : 'variantName' + index, value : variant.name}));
+        id : 'variantName' + index, value : variant.name,
+        onclick : function() {common.setDataChangedValue(true);}}));
     for (let i in ids) {
         result.appendChild(tableNewColumn('input', 'divTableCell', 
             {className : 'input tableInput', type : 'number', min : '0', 
             step : '0.01', id : "variant" + index + "criterion" + ids[i],
+            onclick : function() {common.setDataChangedValue(true);},
             value : variant.getValue(ids[i])}));
     }
     result.appendChild(tableNewColumn('button', 'divTableCellSmall', 
@@ -166,7 +169,6 @@ function variantsTableAddRow(variant = undefined) {
     document.getElementById('deleteVariantButton' + index).onclick = function() {
         variantsTableDeleteRow(index);
     };
-    common.setDataChangedValue(true);
 }
 
 function numberFormat(value) {
@@ -216,7 +218,6 @@ function saveAll() {
     saveCriteria();
     saveVariants();
     saveName();
-    common.setDataChangedValue(true);
      //send appData to main process:
     require('electron').remote.getGlobal('shared').appData = appData;
 }
@@ -434,16 +435,21 @@ document.getElementById('showResult').onclick = function() {
 
 document.getElementById('weightsPlusButton').onclick = function() {
     weightTableAddRow();
+    common.setDataChangedValue(true);
 };
 
 document.getElementById('variantsPlusButton').onclick = function() {
     variantsTableAddRow();
+    common.setDataChangedValue(true);
 };
 
 document.getElementById('nameInput').onchange = function() {
     common.setDataChangedValue(true);
 };
 
+document.getElementById('descInput').onchange = function() {
+    common.setDataChangedValue(true);
+};
 document.getElementById('descInput').onchange = function() {
     common.setDataChangedValue(true);
 };

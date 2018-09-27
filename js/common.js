@@ -8,7 +8,6 @@ let mainProcess = true;
 let settingsWindow = null;
 let aboutWindow = null;
 let licenseWindow = null;
-let helpWindow = null;
 
 if (global.shared === undefined) {
     mainProcess = false; //renderer process
@@ -89,17 +88,21 @@ function loadFileDialog() {
             if (fileNames === undefined)
                 return;
             try {
-                let data = loadFile(fileNames[0]);
-                appData.buildFromJSON(JSON.parse(data));
-                setCurrentFile(fileNames[0]);
-                let index = require("./index.js");
-                index.redrawAll();
-                setDataChangedValue(false);
+                loadData(fileNames[0]);
             } catch(e) {
                 console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
             }
         }
     );
+}
+
+function loadData(fileName) {
+    let data = loadFile(fileName);
+    appData.buildFromJSON(JSON.parse(data));
+    setCurrentFile(fileName);
+    let index = require("./index.js");
+    index.redrawAll();
+    setDataChangedValue(false);
 }
 
 function loadFile(fileName) {
@@ -281,24 +284,17 @@ function showAboutInfo() {
 }
 
 function showHelp() {
-    let BrowserWindow = require('electron').remote.BrowserWindow;
-    if (helpWindow) {
+    if (getDataChangedValue()) {
+        clearDataDialog(showExample);
         return;
     }
-    helpWindow = new BrowserWindow({
-        width: 450,
-        height: 300,
-        minWidth: 450,
-        minHeight: 300,
-        parent: require('electron').remote.getGlobal('shared').win,
-        icon: "assets/donkey.png"
-    });
-    helpWindow.loadFile('assets/help.html');
-    // helpWindow.webContents.openDevTools();
-    helpWindow.setMenu(null);
-    helpWindow.on('closed', () => {
-        helpWindow = null; //delete window
-    });
+    showExample();
+}
+
+function showExample() {
+    const path = require("path");
+    let exampleFile = path.join(__dirname, '..', 'examples', 'cpu.json');
+    loadData(exampleFile);
 }
 
 module.exports.generate = generate;
