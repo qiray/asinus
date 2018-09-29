@@ -2,6 +2,7 @@
 const {app, dialog, BrowserWindow} = require('electron');
 
 //TODO: read https://github.com/crilleengvall/electron-tutorial-app
+//TODO: Package - test settings, license etc. 
 //TODO: Readme
 //TODO: check examples
 //TODO: resize table or add tooltips for values
@@ -20,7 +21,8 @@ function createWindow () {
         height: 600,
         minWidth: 800,
         minHeight: 600,
-        icon: "assets/donkey.png"
+        icon: "assets/donkey.png",
+        show: false //don't show window on startup
     };
     if (settings.saveSize) {
         windowParams.width = settings.width;
@@ -34,6 +36,9 @@ function createWindow () {
     // win.webContents.openDevTools();//enable devtools
     const locale = new (require("./js/locale.js"))();
 
+    win.once('ready-to-show', () => {
+        win.show(); //show only on load finished
+    });
     //before windows is closed
     win.on('close', function(e) {
         if (global.shared.dataChanged) {
@@ -46,11 +51,13 @@ function createWindow () {
             }, function (response) {
                 if (response === 1) { // Runs the following if 'Yes' is clicked
                     global.shared.dataChanged = false;
+                    common.updateBounds(global.shared.settings);
+                    common.saveSettings(global.shared.settings);
                     win.close();
                 }
             });
+            return;
         }
-
         common.updateBounds(global.shared.settings);
         common.saveSettings(global.shared.settings);
     });

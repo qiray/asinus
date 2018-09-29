@@ -2,8 +2,8 @@
 let appData = require("./appdata.js");
 
 let ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-let settingsFileName = "settings.json";
 
+let app = null;
 let mainProcess = true;
 let settingsWindow = null;
 let aboutWindow = null;
@@ -11,7 +11,12 @@ let licenseWindow = null;
 
 if (global.shared === undefined) {
     mainProcess = false; //renderer process
+    app = require('electron').remote.app;
+} else {
+    app = require('electron').app;
 }
+
+let settingsFileName = app.getPath("appData") + "/settings.json";
 
 function generate(length) {
     //generate random sequence
@@ -202,11 +207,15 @@ function showLicenseWindow() {
 }
 
 function saveSettings(settings) {
-    if (mainProcess)
-        global.shared.settings = settings;
-    else
-        require('electron').remote.getGlobal('shared').settings = settings;
-    saveFile(settingsFileName, JSON.stringify(settings));
+    try {
+        if (mainProcess)
+            global.shared.settings = settings;
+        else
+            require('electron').remote.getGlobal('shared').settings = settings;
+        saveFile(settingsFileName, JSON.stringify(settings));
+    } catch(e) {
+        console.log('Error ' + e.name + ": " + e.message + "\n" + e.stack);
+    }
 }
 
 function loadSettings() {

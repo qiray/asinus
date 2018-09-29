@@ -1,11 +1,13 @@
 {
   "name": "asinus",
+  "productName": "Asinus",
   "version": "1.0.0",
   "description": "Utility for making rational decisions",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "package-mac" : "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/donkey.icns --prune=true --out=release-builds"
   },
   "repository": {
     "type": "git",
@@ -15,6 +17,7 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/qiray/asinus#readme",
   "devDependencies": {
-    "electron": "^2.0.8"
+    "electron": "^2.0.8",
+    "electron-packager": "^12.1.2"
   }
 }
