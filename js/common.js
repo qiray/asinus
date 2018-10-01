@@ -302,7 +302,10 @@ function showHelp() {
 
 function showExample() {
     const path = require("path");
-    let exampleFile = path.join(__dirname, '..', 'examples', 'cpu.json');
+    const locale = new (require("./locale.js"))();
+    const currentLocale = locale.getLocale();
+    let filepath = currentLocale === 'en' ? 'cpu.json' : ('cpu_' + currentLocale + '.json');
+    let exampleFile = path.join(__dirname, '..', 'examples', filepath);
     loadData(exampleFile);
 }
 

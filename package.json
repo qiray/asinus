@@ -7,7 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "package-mac" : "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/donkey.icns --prune=true --out=release-builds"
+    "package-mac": "electron-packager . --overwrite --platform=darwin --asar --arch=x64 --icon=assets/donkey.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . asinus --overwrite --asar --platform=win32 --icon=assets/donkey.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Asinus\"",
+    "package-linux": "electron-packager . asinus --overwrite --asar --platform=linux --arch=x64 --icon=assets/donkey.png --prune=true --out=release-builds"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/qiray/asinus#readme",
   "devDependencies": {
-    "electron": "^2.0.8",
+    "electron": "^2.0.10",
     "electron-packager": "^12.1.2"
   }
 }

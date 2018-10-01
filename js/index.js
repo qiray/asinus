@@ -160,7 +160,7 @@ function variantsTableAddRow(variant = undefined) {
         result.appendChild(tableNewColumn('input', 'divTableCell', 
             {className : 'input tableInput', type : 'number', min : '0', 
             step : '0.01', id : "variant" + index + "criterion" + ids[i],
-            onclick : function() {common.setDataChangedValue(true);},
+            onclick : setDataChangedTrue(),
             value : variant.getValue(ids[i])}));
     }
     result.appendChild(tableNewColumn('button', 'divTableCellSmall', 
@@ -168,6 +168,12 @@ function variantsTableAddRow(variant = undefined) {
     table.appendChild(result);
     document.getElementById('deleteVariantButton' + index).onclick = function() {
         variantsTableDeleteRow(index);
+    };
+}
+
+function setDataChangedTrue() {
+    return function() {
+        common.setDataChangedValue(true);
     };
 }
 
