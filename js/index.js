@@ -48,11 +48,11 @@ function newWeightTableRowElements(index, obj) {
     container.id = "weightTableRow" + index;
     container.appendChild(tableNewColumn('input', 'divTableCell', 
         {className : 'input tableInput', type : 'text', id : 'criterionName' + index,
-        onclick : function() {common.setDataChangedValue(true);},
+        onchange : function() {common.setDataChangedValue(true);},
         value : obj ? obj.getName() : ''}));
     container.appendChild(tableNewColumn('input', 'divTableCell', 
         {className : 'input tableInput', type : 'number', min : '0', step : '0.01', 
-        onclick : function() {common.setDataChangedValue(true);},
+        onchange : function() {common.setDataChangedValue(true);},
         id : 'criterionValue' + index, value : obj ? obj.getWeight() : '0'}));
     container.appendChild(tableNewColumn('input', 'divTableCellSmall', 
         {type : 'checkbox', id : 'criterionInverted' + index,
@@ -155,7 +155,7 @@ function variantsTableAddRow(variant = undefined) {
     result.appendChild(tableNewColumn('input', 'divTableCell',
         {className : 'input tableInput', type : 'text', 
         id : 'variantName' + index, value : variant.name,
-        onclick : function() {common.setDataChangedValue(true);}}));
+        onchange : function() {common.setDataChangedValue(true);}}));
     for (let i in ids) {
         result.appendChild(tableNewColumn('input', 'divTableCell', 
             {className : 'input tableInput', type : 'number', min : '0', 
