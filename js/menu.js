@@ -52,7 +52,7 @@ function getTemplate() {
             submenu: [
                 {label: locale.translate('mainmenu', 'help'), click() {
                     common.showHelp();
-                }},
+                }, accelerator: 'F1'},
                 {label: locale.translate('mainmenu', 'example'), click() {
                     common.showExampleMenu();
                 }},
