@@ -31,7 +31,10 @@ function getTemplate() {
                 {role: 'copy', label: locale.translate('mainmenu', 'copy')},
                 {role: 'paste', label: locale.translate('mainmenu', 'paste')},
                 {type: 'separator'},
-                {label: locale.translate('mainmenu', 'settings'), 
+                {label: locale.translate('mainmenu', 'clearall'),
+                    click() {common.clearDataRequest();}},
+                {type: 'separator'},
+                {label: locale.translate('mainmenu', 'settings'),
                     click() {common.showSettingsWindow();}, accelerator: 'CmdOrCtrl+,'},
             ]
         },
@@ -49,6 +52,9 @@ function getTemplate() {
             submenu: [
                 {label: locale.translate('mainmenu', 'help'), click() {
                     common.showHelp();
+                }},
+                {label: locale.translate('mainmenu', 'example'), click() {
+                    common.showExampleMenu();
                 }},
                 {label: locale.translate('mainmenu', 'about'), click() {
                     common.showAboutInfo();

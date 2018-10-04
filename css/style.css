@@ -92,11 +92,17 @@ div.coloredTable {
     text-align: left;
     border-collapse: collapse;
 }
+.descDiv {
+    flex-flow: column;
+    display: flex;
+    height: calc(95% - 80px);
+}
 .descInput {
     max-width: 95%;
     min-width: 95%;
     width: 95%;
-    height: 20em;
+    flex-grow: 1;
+    resize: none;
     border: 1px solid #AAAAAA;
 }
 .nameInput {
@@ -131,6 +137,9 @@ div.coloredTable {
 }
 .center {
     text-align: center;
+}
+.help {
+    white-space: pre-wrap;
 }
 /* .tooltiptext {
     visibility: hidden;

@@ -46,12 +46,14 @@
         "copy" : "Copy",
         "paste" : "Paste",
         "settings" : "Settings",
+        "clearall" : "Clear all",
 
         "window": "Window",
         "minimize": "Minimize",
         "close": "Close",
 
-        "help": "Help",
+        "help" : "Help",
+        "example" : "Example",
         "about": "About",
 
         "services": "Services",

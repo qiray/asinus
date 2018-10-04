@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>""</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+    </head>
+    <body class="body">
+        <pre class="help" id="content">
+        </pre>
+        <script>
+            let index = require("../js/common.js");
+            let locale = new (require("../js/locale.js"))();
+            let currentLocale = locale.getLocale();
+            let isEnglish = currentLocale === 'en';
+            let postfix = isEnglish ? '' : ('_' + currentLocale);
+            let path = require("path");
+            document.getElementById('content').innerHTML = 
+                index.loadFile(__dirname + "/Help/" + currentLocale + ".txt");
+            document.title = locale.translate("mainmenu", "help");
+        </script>
+    </body>
+</html>

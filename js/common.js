@@ -8,6 +8,7 @@ let mainProcess = true;
 let settingsWindow = null;
 let aboutWindow = null;
 let licenseWindow = null;
+let helpWindow = null;
 
 if (global.shared === undefined) {
     mainProcess = false; //renderer process
@@ -293,6 +294,27 @@ function showAboutInfo() {
 }
 
 function showHelp() {
+    let BrowserWindow = require('electron').remote.BrowserWindow;
+    if (helpWindow) {
+        return;
+    }
+    helpWindow = new BrowserWindow({
+        width: 650,
+        height: 540,
+        minWidth: 650,
+        minHeight: 540,
+        parent: require('electron').remote.getGlobal('shared').win,
+        icon: "assets/donkey.png"
+    });
+    helpWindow.loadFile('assets/help.html');
+    // licenseWindow.webContents.openDevTools();
+    helpWindow.setMenu(null);
+    helpWindow.on('closed', () => {
+        helpWindow = null;
+    });
+}
+
+function showExampleMenu() {
     if (getDataChangedValue()) {
         clearDataDialog(showExample);
         return;
@@ -326,3 +348,4 @@ module.exports.setDataChangedValue = setDataChangedValue;
 module.exports.showAboutInfo = showAboutInfo;
 module.exports.showLicenseWindow = showLicenseWindow;
 module.exports.showHelp = showHelp;
+module.exports.showExampleMenu = showExampleMenu;
