@@ -8,6 +8,8 @@
     "license" : "License: ",
     "freesoftware" : "this is a free software released under The 3-Clause BSD License",
     "realLicense" : "",
+    "source" : "This software is open source. It's source is located here: ",
+    "source-url" : "https://github.com/qiray/asinus",
     "nodejs" : "Node.js: ",
     "chrome" : "Chrome: ",
     "electron" : "Electron: ",

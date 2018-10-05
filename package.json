@@ -13,11 +13,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://qiray@bitbucket.org/qiray/asinus.git"
+    "url": "git@github.com:qiray/asinus.git"
   },
   "author": "qiray",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/qiray/asinus#readme",
+  "homepage": "https://github.com/qiray/asinus#readme",
   "devDependencies": {
     "electron": "^2.0.11",
     "electron-packager": "^12.2.0"

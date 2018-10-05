@@ -14,6 +14,9 @@ function init() {
     document.getElementById('copyright').innerHTML = locale.translate('copyright');
     document.getElementById('license').innerHTML = locale.translate('license') + 
         "<a href=\"LICENSE\">" + locale.translate('freesoftware') + "</a>";
+    document.getElementById('source').innerHTML = locale.translate('source') + 
+        "<a href=\"" + locale.translate('source-url') + "\">" + 
+        locale.translate('source-url') + "</a>";
     document.getElementById('nodejs').innerHTML = locale.translate('nodejs') + 
         process.versions.node;
     document.getElementById('chrome').innerHTML = locale.translate('chrome') + 
