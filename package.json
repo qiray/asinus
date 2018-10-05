@@ -2,7 +2,7 @@
   "name": "asinus",
   "productName": "Asinus",
   "version": "1.0.0",
-  "description": "Utility for making rational decisions",
+  "description": "Application for making rational decisions",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,7 +16,7 @@
     "url": "git@github.com:qiray/asinus.git"
   },
   "author": "qiray",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "homepage": "https://github.com/qiray/asinus#readme",
   "devDependencies": {
     "electron": "^2.0.11",
