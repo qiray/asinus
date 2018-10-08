@@ -10,6 +10,8 @@ let aboutWindow = null;
 let licenseWindow = null;
 let helpWindow = null;
 
+const path = require("path");
+
 if (global.shared === undefined) {
     mainProcess = false; //renderer process
     app = require('electron').remote.app;
@@ -176,7 +178,7 @@ function showSettingsWindow() {
         maxWidth: 400,
         maxHeight: 300,
         parent: require('electron').remote.getGlobal('shared').win, //get main window from global
-        icon: "assets/donkey.png"
+        icon: path.join(__dirname, "../assets/donkey.png")
     });
     settingsWindow.loadFile('assets/settings.html');
     // settingsWindow.webContents.openDevTools();
@@ -197,7 +199,7 @@ function showLicenseWindow() {
         minWidth: 650,
         minHeight: 540,
         parent: require('electron').remote.getGlobal('shared').win,
-        icon: "assets/donkey.png"
+        icon: path.join(__dirname, "../assets/donkey.png")
     });
     licenseWindow.loadFile('assets/license.html');
     // licenseWindow.webContents.openDevTools();
@@ -274,7 +276,7 @@ function showAboutInfo() {
     if (aboutWindow) {
         return;
     }
-    let width = 450, height = 340;
+    let width = 450, height = 350;
     aboutWindow = new BrowserWindow({
         width: width,
         height: height,
@@ -283,7 +285,7 @@ function showAboutInfo() {
         maxWidth: width,
         maxHeight: height,
         parent: require('electron').remote.getGlobal('shared').win,
-        icon: "assets/donkey.png"
+        icon: path.join(__dirname, "../assets/donkey.png")
     });
     aboutWindow.loadFile('assets/about.html');
     // aboutWindow.webContents.openDevTools();
@@ -304,7 +306,7 @@ function showHelp() {
         minWidth: 650,
         minHeight: 540,
         parent: require('electron').remote.getGlobal('shared').win,
-        icon: "assets/donkey.png"
+        icon: path.join(__dirname, "../assets/donkey.png")
     });
     helpWindow.loadFile('assets/help.html');
     // licenseWindow.webContents.openDevTools();
@@ -323,7 +325,6 @@ function showExampleMenu() {
 }
 
 function showExample() {
-    const path = require("path");
     const locale = new (require("./locale.js"))();
     const currentLocale = locale.getLocale();
     let filepath = currentLocale === 'en' ? 'cpu.json' : ('cpu_' + currentLocale + '.json');

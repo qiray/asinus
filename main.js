@@ -11,6 +11,7 @@ const {app, dialog, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
+    var path = require('path')
     //create global object named 'shared':
     global.shared = {appData : {}, currentFile : "", dataChanged : false};
     let common = require("./js/common.js");
@@ -20,7 +21,7 @@ function createWindow () {
         height: 600,
         minWidth: 800,
         minHeight: 600,
-        icon: "assets/donkey.png",
+        icon: path.join(__dirname, "assets/donkey.png"),
         show: false //don't show window on startup
     };
     if (settings.saveSize) {
