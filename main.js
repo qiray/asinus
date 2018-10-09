@@ -2,7 +2,6 @@
 const {app, dialog, BrowserWindow} = require('electron');
 
 //TODO: read https://github.com/crilleengvall/electron-tutorial-app
-//TODO: improve examples and help
 //TODO: resize table or add tooltips for values
 //TODO: add info about testers
 
@@ -11,7 +10,7 @@ const {app, dialog, BrowserWindow} = require('electron');
 let win;
 
 function createWindow () {
-    var path = require('path')
+    var path = require('path');
     //create global object named 'shared':
     global.shared = {appData : {}, currentFile : "", dataChanged : false};
     let common = require("./js/common.js");

@@ -2,7 +2,7 @@
   "name": "asinus",
   "productName": "Asinus",
   "version": "1.0.0",
-  "description": "Application for making rational decisions",
+  "description": "Application for making rational decision",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
