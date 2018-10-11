@@ -9,7 +9,7 @@ Name "Asinus" is a reference to Latin "Asinus Buridani" - Buridan's ass.
 
 To run app from it's sources you need to install Electron - https://electronjs.org/docs/tutorial/installation
 
-To run binary package you need nothing except modern OS.
+To run binary package you need to download it for your OS here - https://github.com/qiray/asinus/releases/tag/1.0.0
 
 ## Usage
 
